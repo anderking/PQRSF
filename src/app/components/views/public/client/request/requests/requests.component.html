@@ -1,0 +1,73 @@
+<main class="main_request">
+	<div class="container-fluid">
+		<div class="row">
+			<!--<div class="col-md-2">
+				<h1 class="text-center">PQRSF</h1>
+				<br>
+				<div class="list-group">
+					<a [routerLink]="['/']" class="list-group-item list-group-item-action">Inicio</a>
+					<a [routerLink]="['/']" class="list-group-item list-group-item-action">Crear Solicitud</a>
+					<a [routerLink]="['/']" class="list-group-item list-group-item-action">Mis solicitudes</a>
+				</div>
+			</div>-->
+
+			<div class="col-md-10 offset-1 manifestation">
+				<div class="row justify-content-center">
+					<div class="col-12">
+						<h4 class="text-center">CREAR SOLICITUD</h4>
+					</div>
+				</div>
+				<br>
+				
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<a [routerLink]="['/request/create']" [queryParams]="{ manifestation: 'petición'}">
+							<h5 class="text-center">PETICIÓN</h5>
+							<img class="img_request" src="assets/img/peticion.jpg" alt="...">
+						</a>
+						<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quaerat tempora sequi vitae aspernatur itaque eligendi aut autem fugiat.</p>
+					</div>
+					<div class="col-md-4">
+						<a [routerLink]="['/request/create']" [queryParams]="{ manifestation: 'reclamo'}">
+							<h5 class="text-center">RECLAMO</h5>
+							<img class="img_request" src="assets/img/reclamo.png" alt="...">
+						</a>
+						<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quaerat tempora sequi vitae aspernatur itaque eligendi aut autem fugiat.</p>
+					</div>
+					<div class="col-md-4">
+						<a [routerLink]="['/request/create']" [queryParams]="{ manifestation: 'felicitaciones'}">
+							<h5 class="text-center">FELICITACIÓN</h5>
+							<img class="img_request" src="assets/img/notimg.jpg" alt="...">
+						</a>
+						<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quaerat tempora sequi vitae aspernatur itaque eligendi aut autem fugiat.</p>
+					</div>
+				</div>
+				<br>
+				
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<a [routerLink]="['/request/create']" [queryParams]="{ manifestation: 'queja'}">
+							<h5 class="text-center">QUEJA</h5>
+							<img class="img_request" src="assets/img/queja.png" alt="...">
+						</a>
+						<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quaerat tempora sequi vitae aspernatur itaque eligendi aut autem fugiat.</p>
+					</div>
+					<div class="col-md-4">
+						<a [routerLink]="['/request/create']" [queryParams]="{ manifestation: 'sugerencia'}">
+							<h5 class="text-center">SUGERENCIA</h5>
+							<img class="img_request" src="assets/img/notimg.jpg" alt="...">
+						</a>
+						<p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos quaerat tempora sequi vitae aspernatur itaque eligendi aut autem fugiat.</p>
+					</div>
+				</div>
+			</div>
+
+			<!--<div class="col-md-1">
+				<div class="text-center">
+					<img class="img_rol" src="assets/img/user.png" alt="...">
+					<h6>Solicitante</h6>
+				</div>
+			</div>-->
+		</div>
+	</div>
+</main>
