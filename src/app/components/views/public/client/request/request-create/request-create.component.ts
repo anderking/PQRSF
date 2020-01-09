@@ -18,7 +18,7 @@ export class RequestCreateComponent implements OnInit {
 	public name:string="";
 	public lastName:string="";
 	public email:string="";
-	public document:string="1";
+	public document:string="";
 	public dni:string="";
 	public origin:string="3";
 	public fileName:string="Subir archivo";
@@ -52,7 +52,6 @@ export class RequestCreateComponent implements OnInit {
       	);
       	this.getDocuments();
       	this.getOrigins();
-      	console.log(this.manifestation)
 	}
 
 	getDocuments()
@@ -114,6 +113,7 @@ export class RequestCreateComponent implements OnInit {
 	{
 		console.log(form.value)
 		alert("Formulario enviado")
+		this.reset();
 		
 	}
 
@@ -123,7 +123,7 @@ export class RequestCreateComponent implements OnInit {
 		this.name="";
 		this.lastName="";
 		this.email="";
-		this.document="1";
+		this.document="";
 		this.dni="";
 		this.origin="2";
 		this.fileName="Subir archivo"
