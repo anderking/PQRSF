@@ -142,6 +142,8 @@
 
 							</div>
 
+							<button  type="button" class="btn btn-secondary" (click)="goBack()">Regresar</button>
+
 							<button type="button" (click)="reset()" class="btn btn-info">Cancelar</button>
 							<div [ngClass]="{'d-inline-block': (registerForm.form.valid && manifestation!=undefined) || (isNo && (validationResponseYes.valid || validationResponseNo.valid) && validationDescription.touched && validationDescription.valid && manifestation), 'd-none': !registerForm.form.valid}">
 								<button type="button" (click)="register(registerForm)"  class="btn btn-primary">Enviar</button>
