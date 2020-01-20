@@ -27,8 +27,8 @@
 
 								<div class="form-group form-check col-md-12">
 									<h6>1. Tipo de manifestación*</h6>
-									<input type="checkbox"  name="manifestation" checked value="{{manifestation}}"  required disabled>
-									<label class="form-check-label" for="exampleCheck1">{{ manifestation | titlecase }}</label>
+									<input type="checkbox"  name="manifestacionType" checked value="{{manifestacionType}}"  required disabled>
+									<label class="form-check-label" for="exampleCheck1">{{ manifestacionType | titlecase }}</label>
 								</div>
 
 
@@ -64,11 +64,11 @@
 
 
 									<div class="custom-control custom-radio">
-										<input type="radio" id="customControlValidation2" class="custom-control-input" name="response" #validationResponseYes="ngModel" [(ngModel)]="response" value="yes" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationResponseYes.touched && !validationResponseYes.valid, 'is-valid': validationResponseYes.valid}" required>
+										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseYes="ngModel" [(ngModel)]="manifestacionResponse" value="yes" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseYes.touched && !validationManifestacionResponseYes.valid, 'is-valid': validationManifestacionResponseYes.valid}" required>
 										<label class="custom-control-label" for="customControlValidation2">Si</label>
 									</div>
 									<div class="custom-control custom-radio mb-3">
-										<input type="radio" id="customControlValidation3" class="custom-control-input" name="response" #validationResponseNo="ngModel" [(ngModel)]="response" value="no" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationResponseNo.touched && !validationResponseNo.valid, 'is-valid': validationResponseNo.valid}" required>
+										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="no" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseNo.touched && !validationManifestacionResponseNo.valid, 'is-valid': validationManifestacionResponseNo.valid}" required>
 										<label class="custom-control-label" for="customControlValidation3">No</label>
 										<div class="invalid-feedback">Por favor, indique su respuesta</div>
 									</div>
@@ -78,9 +78,9 @@
 								<div class="form-group col-md-6" [ngClass]="{'d-block': isYes, 'd-none': !isYes}">
 									<div class="form-group">
 										<h6>4. Nombre(s)*</h6>
-										<input type="text" [ngClass]="{'is-invalid': validationName.touched && !validationName.valid, 'is-valid': validationName.touched && validationName.valid}" class="form-control" name="name" #validationName="ngModel" placeholder="Nombre(s)" [(ngModel)]="name" minlength="1" maxlength="300" required>
-										<div class="invalid-feedback" *ngIf="validationName.touched && !validationName.valid">
-											<div *ngIf="validationName.errors.required">Por favor, introduzca un Nombre</div>
+										<input type="text" [ngClass]="{'is-invalid': validationFirstName.touched && !validationFirstName.valid, 'is-valid': validationFirstName.touched && validationFirstName.valid}" class="form-control" name="firstName" #validationFirstName="ngModel" placeholder="Nombre(s)" [(ngModel)]="firstName" minlength="1" maxlength="300" required>
+										<div class="invalid-feedback" *ngIf="validationFirstName.touched && !validationFirstName.valid">
+											<div *ngIf="validationFirstName.errors.required">Por favor, introduzca un Nombre</div>
 										</div>
 									</div>
 
@@ -105,37 +105,37 @@
 
 									<div class="form-group">
 										<h6>7. Tipo de documento*</h6>
-										<select [ngClass]="{'is-invalid': validationDni.touched && !validationDocument.valid, 'is-valid': validationDni.touched && validationDocument.valid}" name="document" #validationDocument="ngModel" [(ngModel)]="document" class="form-control" required>
+										<select [ngClass]="{'is-invalid': validationDocumentType.touched && !validationDocumentType.valid, 'is-valid': validationDocumentType.touched && validationDocumentType.valid}" name="documentType" #validationDocumentType="ngModel" [(ngModel)]="documentType" class="form-control" required>
 											<option value="" disabled selected hidden>Seleccione un tipo de documento</option>
-											<option *ngFor="let document of documents" [value]="document.id"> {{document.name}}</option>
+											<option *ngFor="let documentType of documentTypes" [value]="documentType.id"> {{documentType.name}}</option>
 										</select>
 
-										<div class="invalid-feedback" *ngIf="validationDocument.touched && !validationDocument.valid">
-											<div *ngIf="validationDocument.errors.required">Por favor, introduzca un tipo de documento</div>
+										<div class="invalid-feedback" *ngIf="validationDocumentType.touched && !validationDocumentType.valid">
+											<div *ngIf="validationDocumentType.errors.required">Por favor, introduzca un tipo de documento</div>
 										</div>
 
 									</div>
 
 									<div class="form-group">
 										<h6>8. Número de documento*</h6>
-										<input type="text" [ngClass]="{'is-invalid': validationDni.touched && !validationDni.valid, 'is-valid': validationDni.touched && validationDni.valid}" class="form-control" name="dni" #validationDni="ngModel" placeholder="Número de documento" [(ngModel)]="dni" required maxlength="300">
+										<input type="text" [ngClass]="{'is-invalid': validationDocument.touched && !validationDocument.valid, 'is-valid': validationDocument.touched && validationDocument.valid}" class="form-control" name="document" #validationDocument="ngModel" placeholder="Número de documento" [(ngModel)]="document" required maxlength="300">
 
-										<div class="invalid-feedback" *ngIf="validationDni.touched && !validationDni.valid">
-											<div *ngIf="validationDni.errors.required">Por favor, introduzca un número de documento</div>
-											<div *ngIf="validationDni.errors.maxlength">El número de documento debe contener maximo 300 caracteres</div>
+										<div class="invalid-feedback" *ngIf="validationDocument.touched && !validationDocument.valid">
+											<div *ngIf="validationDocument.errors.required">Por favor, introduzca un número de documento</div>
+											<div *ngIf="validationDocument.errors.maxlength">El número de documento debe contener maximo 300 caracteres</div>
 
 										</div>
 									</div>
 
 									<div class="form-group">
 										<h6>9. Origen de la solicitud*</h6>
-										<select [ngClass]="{'is-invalid': !validationOrigin.valid, 'is-valid':  validationOrigin.valid}" name="origin" #validationOrigin="ngModel" [(ngModel)]="origin" class="form-control" required>
+										<select [ngClass]="{'is-invalid': validationOriginRequest.touched && !validationOriginRequest.valid, 'is-valid':  validationOriginRequest.touched && validationOriginRequest.valid}" name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest" class="form-control" required>
 											<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>
-											<option *ngFor="let origin of origins" [value]="origin.id"> {{origin.name}}</option>
+											<option *ngFor="let originRequest of originRequests" [value]="originRequest.id"> {{originRequest.name}}</option>
 										</select>
 
-										<div class="invalid-feedback" *ngIf="validationOrigin.touched && !validationOrigin.valid">
-											<div *ngIf="validationOrigin.errors.required">Por favor, introduzca un origen de la solicitud</div>
+										<div class="invalid-feedback" *ngIf="validationOriginRequest.touched && !validationOriginRequest.valid">
+											<div *ngIf="validationOriginRequest.errors.required">Por favor, introduzca un origen de la solicitud</div>
 										</div>
 									</div>
 								</div>
@@ -145,7 +145,7 @@
 							<button  type="button" class="btn btn-secondary" (click)="goBack()">Regresar</button>
 
 							<button type="button" (click)="reset()" class="btn btn-info">Cancelar</button>
-							<div [ngClass]="{'d-inline-block': (registerForm.form.valid && manifestation!=undefined) || (isNo && (validationResponseYes.valid || validationResponseNo.valid) && validationDescription.touched && validationDescription.valid && manifestation), 'd-none': !registerForm.form.valid}">
+							<div [ngClass]="{'d-inline-block': (registerForm.form.valid && manifestacionType!=undefined) || (isNo && (validationManifestacionResponseYes.valid || validationManifestacionResponseNo.valid) && validationDescription.touched && validationDescription.valid && manifestacionType), 'd-none': !registerForm.form.valid}">
 								<button type="button" (click)="register(registerForm)"  class="btn btn-primary">Enviar</button>
 							</div>
 

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import {Location} from '@angular/common';
 import { DocumentService } from 'src/app/core/services/document.service';
 import { OriginService } from 'src/app/core/services/origin.service';
+import { Request } from 'src/app/models/request';
 
 @Component({
   selector: 'app-request-create',
@@ -12,21 +13,24 @@ import { OriginService } from 'src/app/core/services/origin.service';
 })
 export class RequestCreateComponent implements OnInit {
 
-	public manifestation:string;
+	public manifestacionType:string;
 	public description:string="";
-	public response:string="";
-	public name:string="";
+	public manifestacionResponse:string="";
+	public firstName:string="";
 	public lastName:string="";
 	public email:string="";
+	public documentType:string="";
 	public document:string="";
-	public dni:string="";
-	public origin:string="3";
+	public originRequest:string="3";
 	public fileName:string="Subir archivo";
 
-	public origins:any;
-	public documents:any;
+	public request:Request;
+	public originRequests:any;
+	public documentTypes:any;
+
 	public isYes:boolean=false;
 	public isNo:boolean=false;
+
 	public filesToUpload:any;
 	public isFileChosen:any;
 
@@ -47,11 +51,26 @@ export class RequestCreateComponent implements OnInit {
 		(
 			params =>
 			{
-        		this.manifestation = params.manifestation;
+        		this.manifestacionType = params.manifestacionType;
       		}
       	);
       	this.getDocuments();
-      	this.getOrigins();
+		this.getOrigins();
+		this.initInterface();
+	}
+
+	initInterface(){
+		this.request = {
+			manifestacionType:this.manifestacionType,
+			description:this.description,
+			manifestacionResponse:this.manifestacionResponse,
+			firstName:this.firstName,
+			lastName:this.lastName,
+			email:this.email,
+			documentType:this.documentType,
+			document:this.document,
+			originRequest:this.originRequest
+		}
 	}
 
 	getDocuments()
@@ -60,7 +79,8 @@ export class RequestCreateComponent implements OnInit {
 		(
 			response =>
 			{
-				this.documents = response;
+				this.documentTypes = response;
+				console.log(this.documentTypes);
 			},
 			error => 
 			{
@@ -75,7 +95,7 @@ export class RequestCreateComponent implements OnInit {
 		(
 			response =>
 			{
-				this.origins = response;
+				this.originRequests = response;
 			},
 			error => 
 			{
@@ -111,21 +131,45 @@ export class RequestCreateComponent implements OnInit {
 
 	register(form: NgForm)
 	{
-		console.log(form.value)
-		alert("Formulario enviado")
+		if(form.value.manifestacionResponse=="no")
+		{
+			this.request.description = form.value.description;
+			this.request.manifestacionResponse = form.value.manifestacionResponse;
+			this.request.firstName = "";
+			this.request.lastName = "";
+			this.request.email = "";
+			this.request.documentType = "";
+			this.request.document = "";
+			this.request.originRequest="";
+		}
+
+		if(form.value.manifestacionResponse=="yes")
+		{
+			this.request.description = form.value.description;
+			this.request.manifestacionResponse = form.value.manifestacionResponse;
+			this.request.firstName = form.value.firstName;
+			this.request.lastName = form.value.lastName;
+			this.request.email = form.value.email;
+			this.request.documentType = form.value.documentType;
+			this.request.document = form.value.document;
+			this.request.originRequest=form.value.originRequest;
+		}
+
+		console.log(this.request)
+		
 		this.reset();
 		
 	}
 
 	reset(){
 		this.description="";
-		this.response="";
-		this.name="";
+		this.manifestacionResponse="";
+		this.firstName="";
 		this.lastName="";
 		this.email="";
+		this.documentType="";
 		this.document="";
-		this.dni="";
-		this.origin="2";
+		this.originRequest="";
 		this.fileName="Subir archivo"
 		this.isYes=false;
 		this.isNo=false;
