@@ -9,6 +9,7 @@ import { RequestRoutingModule } from './request-routing.module';
 import { RequestComponent } from './request.component';
 import { RequestsComponent } from './requests/requests.component';
 import { RequestCreateComponent } from './request-create/request-create.component';
+import { RequestService } from 'src/app/core/services/request.service';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { RequestCreateComponent } from './request-create/request-create.componen
   [
     OriginService,
     DocumentService,
+    RequestService
   ]
 })
 

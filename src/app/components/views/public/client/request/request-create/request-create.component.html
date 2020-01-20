@@ -64,7 +64,7 @@
 
 
 									<div class="custom-control custom-radio">
-										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseYes="ngModel" [(ngModel)]="manifestacionResponse" value="yes" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseYes.touched && !validationManifestacionResponseYes.valid, 'is-valid': validationManifestacionResponseYes.valid}" required>
+										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="si" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseSi.touched && !validationManifestacionResponseSi.valid, 'is-valid': validationManifestacionResponseSi.valid}" required>
 										<label class="custom-control-label" for="customControlValidation2">Si</label>
 									</div>
 									<div class="custom-control custom-radio mb-3">
@@ -107,7 +107,7 @@
 										<h6>7. Tipo de documento*</h6>
 										<select [ngClass]="{'is-invalid': validationDocumentType.touched && !validationDocumentType.valid, 'is-valid': validationDocumentType.touched && validationDocumentType.valid}" name="documentType" #validationDocumentType="ngModel" [(ngModel)]="documentType" class="form-control" required>
 											<option value="" disabled selected hidden>Seleccione un tipo de documento</option>
-											<option *ngFor="let documentType of documentTypes" [value]="documentType.id"> {{documentType.name}}</option>
+											<option *ngFor="let documentType of documentTypes" [value]="documentType.Value"> {{documentType.Name}}</option>
 										</select>
 
 										<div class="invalid-feedback" *ngIf="validationDocumentType.touched && !validationDocumentType.valid">
@@ -131,7 +131,7 @@
 										<h6>9. Origen de la solicitud*</h6>
 										<select [ngClass]="{'is-invalid': validationOriginRequest.touched && !validationOriginRequest.valid, 'is-valid':  validationOriginRequest.touched && validationOriginRequest.valid}" name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest" class="form-control" required>
 											<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>
-											<option *ngFor="let originRequest of originRequests" [value]="originRequest.id"> {{originRequest.name}}</option>
+											<option *ngFor="let originRequest of originRequests" [value]="originRequest.Value"> {{originRequest.Name}}</option>
 										</select>
 
 										<div class="invalid-feedback" *ngIf="validationOriginRequest.touched && !validationOriginRequest.valid">
@@ -145,8 +145,8 @@
 							<button  type="button" class="btn btn-secondary" (click)="goBack()">Regresar</button>
 
 							<button type="button" (click)="reset()" class="btn btn-info">Cancelar</button>
-							<div [ngClass]="{'d-inline-block': (registerForm.form.valid && manifestacionType!=undefined) || (isNo && (validationManifestacionResponseYes.valid || validationManifestacionResponseNo.valid) && validationDescription.touched && validationDescription.valid && manifestacionType), 'd-none': !registerForm.form.valid}">
-								<button type="button" (click)="register(registerForm)"  class="btn btn-primary">Enviar</button>
+							<div [ngClass]="{'d-inline-block': (registerForm.form.valid && manifestacionType!=undefined) || (isNo && (validationManifestacionResponseSi.valid || validationManifestacionResponseNo.valid) && validationDescription.touched && validationDescription.valid && manifestacionType), 'd-none': !registerForm.form.valid}">
+								<button type="button" (click)="register(registerForm)"  class="btn btn-primary" [disabled]="isButton">Enviar</button>
 							</div>
 
 

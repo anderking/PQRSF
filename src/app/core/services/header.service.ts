@@ -6,5 +6,6 @@ export class HeaderService {
   
   constructor() {
     this.header = this.header.set('Content-Type', 'application/json');
+    this.header = this.header.set('Access-Control-Allow-Origin', '*');
    }
 }

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import {Location} from '@angular/common';
 import { DocumentService } from 'src/app/core/services/document.service';
 import { OriginService } from 'src/app/core/services/origin.service';
+import { RequestService } from 'src/app/core/services/request.service';
 import { Request } from 'src/app/models/request';
 
 @Component({
@@ -21,7 +22,7 @@ export class RequestCreateComponent implements OnInit {
 	public email:string="";
 	public documentType:string="";
 	public document:string="";
-	public originRequest:string="3";
+	public originRequest:string="1";
 	public fileName:string="Subir archivo";
 
 	public request:Request;
@@ -30,6 +31,7 @@ export class RequestCreateComponent implements OnInit {
 
 	public isYes:boolean=false;
 	public isNo:boolean=false;
+	public isButton:boolean=false;
 
 	public filesToUpload:any;
 	public isFileChosen:any;
@@ -38,6 +40,7 @@ export class RequestCreateComponent implements OnInit {
 	(
 		private _documentService: DocumentService,
 		private _originService: OriginService,
+		private _requestService: RequestService,
 		private _router: Router,
 		private route: ActivatedRoute,
 		private _location: Location,
@@ -80,7 +83,6 @@ export class RequestCreateComponent implements OnInit {
 			response =>
 			{
 				this.documentTypes = response;
-				console.log(this.documentTypes);
 			},
 			error => 
 			{
@@ -106,7 +108,7 @@ export class RequestCreateComponent implements OnInit {
 
 	changeResponse(event)
 	{
-		if(event=="yes")
+		if(event=="si")
 		{
 			this.isYes=true;
 			this.isNo=false;
@@ -131,33 +133,43 @@ export class RequestCreateComponent implements OnInit {
 
 	register(form: NgForm)
 	{
-		if(form.value.manifestacionResponse=="no")
-		{
-			this.request.description = form.value.description;
-			this.request.manifestacionResponse = form.value.manifestacionResponse;
-			this.request.firstName = "";
-			this.request.lastName = "";
-			this.request.email = "";
-			this.request.documentType = "";
-			this.request.document = "";
-			this.request.originRequest="";
-		}
+		this.isButton = true;
 
-		if(form.value.manifestacionResponse=="yes")
-		{
-			this.request.description = form.value.description;
-			this.request.manifestacionResponse = form.value.manifestacionResponse;
-			this.request.firstName = form.value.firstName;
-			this.request.lastName = form.value.lastName;
-			this.request.email = form.value.email;
-			this.request.documentType = form.value.documentType;
-			this.request.document = form.value.document;
-			this.request.originRequest=form.value.originRequest;
-		}
+			if(form.value.manifestacionResponse=="no")
+			{
+				this.request.description = form.value.description;
+				this.request.manifestacionResponse = form.value.manifestacionResponse;
+				this.request.firstName = "";
+				this.request.lastName = "";
+				this.request.email = "";
+				this.request.documentType = "";
+				this.request.document = "";
+				this.request.originRequest="";
+			}
 
-		console.log(this.request)
-		
-		this.reset();
+			if(form.value.manifestacionResponse=="si")
+			{
+				this.request.description = form.value.description;
+				this.request.manifestacionResponse = form.value.manifestacionResponse;
+				this.request.firstName = form.value.firstName;
+				this.request.lastName = form.value.lastName;
+				this.request.email = form.value.email;
+				this.request.documentType = form.value.documentType;
+				this.request.document = form.value.document;
+				this.request.originRequest=form.value.originRequest;
+			}
+
+
+			this._requestService.create(this.request).subscribe(
+				response => {
+					console.log("Registrado Exitosamente");
+					this.reset();
+				},
+				error => {
+					console.log(error);
+					this.reset();
+				}
+			);
 		
 	}
 
@@ -173,6 +185,7 @@ export class RequestCreateComponent implements OnInit {
 		this.fileName="Subir archivo"
 		this.isYes=false;
 		this.isNo=false;
+		this.isButton=false;
 	}
 
 	goBack()

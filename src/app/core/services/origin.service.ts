@@ -9,7 +9,7 @@ import { Origin } from 'src/app/models/origin';
 @Injectable()
 export class OriginService extends HeaderService{
 
-	url: string = environment.api + 'users';
+	url: string = environment.api + 'GetOriginofTheRequest';
 
 	constructor(
 		private http: HttpClient
