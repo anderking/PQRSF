@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {Location} from '@angular/common';
@@ -35,6 +35,8 @@ export class RequestCreateComponent implements OnInit {
 
 	public filesToUpload:any;
 	public isFileChosen:any;
+	public isFileValid:boolean=true;
+	@ViewChild('registerForm',{static:false}) registerForm;
 
 	constructor
 	(
@@ -66,6 +68,7 @@ export class RequestCreateComponent implements OnInit {
 		this.request = {
 			manifestacionType:this.manifestacionType,
 			description:this.description,
+			file:null,
 			manifestacionResponse:this.manifestacionResponse,
 			firstName:this.firstName,
 			lastName:this.lastName,
@@ -119,16 +122,57 @@ export class RequestCreateComponent implements OnInit {
 		}
 	}
 
-	preUpload(event: any)
+	uploadPic(event)
 	{
-		let file = event.target.files[0];
-		if (event.target.files.length > 0)
+		let file: File = event.target.files[0];
+		if (file)
 		{
 			this.isFileChosen = true;
-		}        
-		this.fileName = file.name;
-		this.filesToUpload = <Array<File>>event.target.files;
-		console.log(this.filesToUpload)
+			this.fileName = file.name;
+
+			let docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+			let doc = 'application/msword';
+			let xlsx = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+			let xls = 'application/vnd.ms-excel';
+			let pptx = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+			let ppt = 'application/vnd.ms-powerpoint';
+			let mdb = 'application/vnd.ms-access';
+			let pdf = 'application/pdf';
+			let jpg = 'image/jpg';
+			let jpeg = 'image/jpeg';
+			let png = 'image/png'
+			const allowed_types = [docx,doc,xlsx,xls,pptx,ppt,mdb,jpg,jpeg,png,pdf];
+			const max_size = 6000000; // 6 Mb
+            const max_height = 15200;
+            const max_width = 25600;
+ 
+            if (file.size > max_size) {
+				this.fileName = 'Tamaño maximo permitido ' + max_size / 1000000 + 'Mb';
+				this.isFileValid = false;
+                return false;
+            }
+ 
+            /*if (!_.includes(allowed_types, file)) {
+                this.fileName = 'Only Images are allowed ( JPG | PNG )';
+                return false;
+            }*/
+
+			let reader = new FileReader();
+
+			reader.onload = (e: any) =>
+			{
+				this.request.file = e.target.result;
+				this.isFileValid = true;
+				
+				//console.log(typeof(this.request.file));
+			}
+
+			reader.onerror = (e) => {
+				console.log(e);
+			}
+
+			reader.readAsDataURL(file);
+		}
 	}
 
 	register(form: NgForm)
@@ -163,11 +207,12 @@ export class RequestCreateComponent implements OnInit {
 			this._requestService.create(this.request).subscribe(
 				response => {
 					console.log("Registrado Exitosamente");
+					//this.reset();
+					form.reset();
 					this.reset();
 				},
 				error => {
 					console.log(error);
-					this.reset();
 				}
 			);
 		
@@ -181,7 +226,7 @@ export class RequestCreateComponent implements OnInit {
 		this.email="";
 		this.documentType="";
 		this.document="";
-		this.originRequest="";
+		this.originRequest="1";
 		this.fileName="Subir archivo"
 		this.isYes=false;
 		this.isNo=false;
