@@ -15,7 +15,7 @@
 				
 				<div class="row justify-content-center">
 					<div class="col-md-12">
-						<img class="img_request_create" src="assets/img/banner.png" alt="...">
+						<img class="img_request_create" src="assets/img/fondo1.jpg" alt="...">
 						<br>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 
 									<h6>3.¿Desea recibir respuesta a su manifestación?*</h6>
 									<small class="form-text text-muted">Los datos suministrados se trataran en confirmidad con la ley 1581 de 2012, "Por la cual se dictan disposiciones generales para la proteccion de datos personales".</small>
-									<a href="https://jsonplaceholder.typicode.com/users" target="_blank">https://jsonplaceholder.typicode.com/users</a>
+									<a href="http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx" target="_blank">http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx</a>
 
 
 									<div class="custom-control custom-radio">
@@ -129,9 +129,9 @@
 
 									<div class="form-group">
 										<h6>9. Origen de la solicitud*</h6>
-										<select [ngClass]="{'is-invalid': validationOriginRequest.touched && !validationOriginRequest.valid, 'is-valid':  validationOriginRequest.touched && validationOriginRequest.valid}" name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest" class="form-control" required>
-											<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>
-											<option *ngFor="let originRequest of originRequests" [value]="originRequest.Value"> {{originRequest.Name}}</option>
+										<select #inputOrigin [ngClass]="{'is-invalid': validationOriginRequest.touched && !validationOriginRequest.valid, 'is-valid':  validationOriginRequest.touched && validationOriginRequest.valid}" name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest"  class="form-control" >
+											<!--<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>-->
+											<option *ngFor="let originRequest of originRequests" [ngValue]="originRequest.Value"> {{originRequest.Name}}</option>
 										</select>
 
 										<div class="invalid-feedback" *ngIf="validationOriginRequest.touched && !validationOriginRequest.valid">
@@ -142,9 +142,9 @@
 
 							</div>
 
-							<button  type="button" class="btn btn-secondary" (click)="goBack()">Regresar</button>
+							<button  type="button" class="btn btn-secondary" (click)="goBack()" [disabled]="isLoading">Regresar</button>
+							<button type="reset" (click)="resetAll()" class="btn btn-info" [disabled]="isLoading">Cancelar</button>
 
-							<button type="button" (click)="resetAll(registerForm)" class="btn btn-info">Cancelar</button>
 							<div [ngClass]="{
 							'd-inline-block':
 								(registerForm.form.valid && manifestacionType!=undefined) ||
@@ -157,10 +157,11 @@
 							,
 							'd-none':
 								(registerForm.form.valid && !isFileValid) || registerForm.form.invalid}">
-								<button *ngIf="!isFileChosen || (isFileChosen && isFileValid)" type="button" (click)="register(registerForm)"  class="btn btn-primary" [disabled]="isButton">Enviar</button>
+
+								<button *ngIf="(!isLoading && !isFileChosen) || (isFileChosen && isFileValid && !isLoading)" type="button" (click)="register(registerForm)"  class="btn btn-primary" [disabled]="isButton">Enviar</button>
+								<button *ngIf="isLoading" class="btn btn-primary" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...</button>
+
 							</div>
-
-
 
 						</form>
 					</div>

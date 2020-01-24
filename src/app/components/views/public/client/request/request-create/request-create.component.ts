@@ -40,7 +40,9 @@ export class RequestCreateComponent implements OnInit {
 	public filesToUpload:any;
 	public isFileChosen:any;
 	public isFileValid:boolean=true;
-	@ViewChild('registerForm',{static:false}) registerForm;
+	public isLoading:boolean=false;
+	@ViewChild('inputOrigin',{static:false}) inputOrigin;
+	
 
 	constructor
 	(
@@ -204,6 +206,7 @@ export class RequestCreateComponent implements OnInit {
 
 	register(form: NgForm)
 	{
+		this.isLoading = true;
 		this.isButton = true;
 
 			if(form.value.manifestacionResponse=="no")
@@ -233,22 +236,27 @@ export class RequestCreateComponent implements OnInit {
 			this._requestService.create(this.request).subscribe(
 				response => {
 					console.log("Registrado Exitosamente");
+					this.isLoading = false;
+					alert("Solicitud Enviada Correctamente");
 					setTimeout(()=>{
 						let pathRoute = window.location.origin;
 						let currentRout = pathRoute+'/request/create/?manifestacionType='+this.manifestacionType
 						window.location.replace(currentRout);
-					},1000)
+					},0)
 				},
 				error => {
 					console.log(error);
+					alert(error.message)
 					this.isButton=false;
+					this.isLoading = false;
 				}
 			);
 		
 	}
 
 	resetAll(form:NgForm){
-		form.reset();
+		//form.reset();
+		//this.inputOrigin.setValue({inputOrigin:'1'})
 		this.description="";
 		this.manifestacionResponse="";
 		this.firstName="";
@@ -256,12 +264,12 @@ export class RequestCreateComponent implements OnInit {
 		this.email="";
 		this.documentType="";
 		this.document="";
-		this.originRequest="1";
+		this.originRequest="1:1";
 		this.fileName="Subir archivo"
 		this.isYes=false;
 		this.isNo=false;
 		this.isButton=false;
-		
+		//this.registerForm.form.markAsPristine();
 	}
 
 	goBack()
