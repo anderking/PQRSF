@@ -1,7 +1,7 @@
 export interface Request{
     manifestacionType:string;
     description:string;
-    file:any;
+    Files:any;
     manifestacionResponse:string;
     firstName:string;
     lastName:string;

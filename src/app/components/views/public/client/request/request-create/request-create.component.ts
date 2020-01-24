@@ -7,6 +7,10 @@ import { OriginService } from 'src/app/core/services/origin.service';
 import { RequestService } from 'src/app/core/services/request.service';
 import { Request } from 'src/app/models/request';
 
+interface FileI{
+	Content:string;
+	FileName:string;
+}
 @Component({
   selector: 'app-request-create',
   templateUrl: './request-create.component.html',
@@ -68,7 +72,7 @@ export class RequestCreateComponent implements OnInit {
 		this.request = {
 			manifestacionType:this.manifestacionType,
 			description:this.description,
-			file:null,
+			Files:[],
 			manifestacionResponse:this.manifestacionResponse,
 			firstName:this.firstName,
 			lastName:this.lastName,
@@ -124,54 +128,77 @@ export class RequestCreateComponent implements OnInit {
 
 	uploadPic(event)
 	{
-		let file: File = event.target.files[0];
-		if (file)
+		let filesInput=event.target.files;
+		let docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+		let doc = 'application/msword';
+		let xlsx = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+		let xls = 'application/vnd.ms-excel';
+		let pptx = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+		let ppt = 'application/vnd.ms-powerpoint';
+		let mdb = 'application/vnd.ms-access';
+		let pdf = 'application/pdf';
+		let jpg = 'image/jpg';
+		let jpeg = 'image/jpeg';
+		let png = 'image/png'
+		let txt = 'text/plain'
+		let allowed_types = [];
+		allowed_types = [docx,doc,xlsx,xls,pptx,ppt,mdb,jpg,jpeg,png,pdf,txt];
+		const max_size = 5000000; // 5 Mb
+		
+		if (filesInput)
 		{
 			this.isFileChosen = true;
-			this.fileName = file.name;
+			
+			let arrayFile = [];
 
-			let docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-			let doc = 'application/msword';
-			let xlsx = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-			let xls = 'application/vnd.ms-excel';
-			let pptx = 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
-			let ppt = 'application/vnd.ms-powerpoint';
-			let mdb = 'application/vnd.ms-access';
-			let pdf = 'application/pdf';
-			let jpg = 'image/jpg';
-			let jpeg = 'image/jpeg';
-			let png = 'image/png'
-			const allowed_types = [docx,doc,xlsx,xls,pptx,ppt,mdb,jpg,jpeg,png,pdf];
-			const max_size = 6000000; // 6 Mb
-            const max_height = 15200;
-            const max_width = 25600;
- 
-            if (file.size > max_size) {
-				this.fileName = 'Tamaño maximo permitido ' + max_size / 1000000 + 'Mb';
-				this.isFileValid = false;
-                return false;
-            }
- 
-            /*if (!_.includes(allowed_types, file)) {
-                this.fileName = 'Only Images are allowed ( JPG | PNG )';
-                return false;
-            }*/
-
-			let reader = new FileReader();
-
-			reader.onload = (e: any) =>
+			let maxFiles = filesInput.length;
+			
+			if(maxFiles>5)
 			{
-				this.request.file = e.target.result;
+				this.fileName = 'La cantidad maxima de archivos permitidos es de 5';
+				this.isFileValid = false;
+				return false;
+			}
+
+			for(var i=0; i<filesInput.length;i++)
+			{
 				this.isFileValid = true;
 				
-				//console.log(typeof(this.request.file));
-			}
+				let currentFile = filesInput[i];
+				
+				let extension = allowed_types.includes(currentFile.type);
 
-			reader.onerror = (e) => {
-				console.log(e);
-			}
+				if (!extension) {
+					this.fileName = 'Solo se permiten archivos de tipo IMG, DOCS, PDF, TXT';
+					this.isFileValid = false;
+					return false;
+				}
 
-			reader.readAsDataURL(file);
+				if (currentFile.size > max_size) {
+					this.fileName = 'Tamaño maximo permitido ' + max_size / 1000000 + 'Mb';
+					this.isFileValid = false;
+					return false;
+				}
+
+				let file: File = currentFile;
+				this.fileName = file.name+"...";
+
+				let reader = new FileReader();
+
+				reader.onload = (e: any) =>
+				{
+					let fileI:FileI
+					fileI = {
+						Content:e.target.result,
+						FileName:file.name
+					}		
+					arrayFile.push(fileI);
+					this.request.Files = arrayFile;
+				}
+
+				reader.onerror = (e) => {console.log(e);}
+				reader.readAsDataURL(file);
+			}
 		}
 	}
 
@@ -203,22 +230,25 @@ export class RequestCreateComponent implements OnInit {
 				this.request.originRequest=form.value.originRequest;
 			}
 
-
 			this._requestService.create(this.request).subscribe(
 				response => {
 					console.log("Registrado Exitosamente");
-					//this.reset();
-					form.reset();
-					this.reset();
+					setTimeout(()=>{
+						let pathRoute = window.location.origin;
+						let currentRout = pathRoute+'/request/create/?manifestacionType='+this.manifestacionType
+						window.location.replace(currentRout);
+					},1000)
 				},
 				error => {
 					console.log(error);
+					this.isButton=false;
 				}
 			);
 		
 	}
 
-	reset(){
+	resetAll(form:NgForm){
+		form.reset();
 		this.description="";
 		this.manifestacionResponse="";
 		this.firstName="";
@@ -231,6 +261,7 @@ export class RequestCreateComponent implements OnInit {
 		this.isYes=false;
 		this.isNo=false;
 		this.isButton=false;
+		
 	}
 
 	goBack()

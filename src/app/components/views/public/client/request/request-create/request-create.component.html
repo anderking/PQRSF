@@ -49,7 +49,7 @@
 										</div>
 
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" name="file" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" #validationFile="ngModel" ngModel [ngClass]="{'is-invalid': validationFile.touched && !isFileValid && validationFile.dirty, 'is-valid': validationFile.touched && isFileValid && validationFile.dirty}">
+											<input type="file" multiple class="custom-file-input" name="file" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" #validationFile="ngModel" ngModel [ngClass]="{'is-invalid': validationFile.touched && !isFileValid && validationFile.dirty, 'is-valid': validationFile.touched && isFileValid && validationFile.dirty}">
 											<label class="custom-file-label" for="inputGroupFile01">{{ fileName }}</label>
 										</div>
 
@@ -64,11 +64,11 @@
 
 
 									<div class="custom-control custom-radio">
-										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="si" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseSi.touched && !validationManifestacionResponseSi.valid, 'is-valid': validationManifestacionResponseSi.valid}" required>
+										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="si" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseSi.touched && !validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty, 'is-valid': validationManifestacionResponseSi.touched && validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty}" required>
 										<label class="custom-control-label" for="customControlValidation2">Si</label>
 									</div>
 									<div class="custom-control custom-radio mb-3">
-										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="no" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseNo.touched && !validationManifestacionResponseNo.valid, 'is-valid': validationManifestacionResponseNo.valid}" required>
+										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="no" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseNo.touched && !validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty, 'is-valid': validationManifestacionResponseNo.touched && validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty}" required>
 										<label class="custom-control-label" for="customControlValidation3">No</label>
 										<div class="invalid-feedback">Por favor, indique su respuesta</div>
 									</div>
@@ -144,9 +144,20 @@
 
 							<button  type="button" class="btn btn-secondary" (click)="goBack()">Regresar</button>
 
-							<button type="reset" (click)="reset()" class="btn btn-info">Cancelar</button>
-							<div [ngClass]="{'d-inline-block': (registerForm.form.valid && manifestacionType!=undefined) || (isNo && (validationManifestacionResponseSi.valid || validationManifestacionResponseNo.valid) && validationDescription.touched && validationDescription.valid && manifestacionType), 'd-none': !registerForm.form.valid}">
-								<button type="button" (click)="register(registerForm)"  class="btn btn-primary" [disabled]="isButton">Enviar</button>
+							<button type="button" (click)="resetAll(registerForm)" class="btn btn-info">Cancelar</button>
+							<div [ngClass]="{
+							'd-inline-block':
+								(registerForm.form.valid && manifestacionType!=undefined) ||
+								(
+									isNo && validationManifestacionResponseNo.valid && 
+									validationDescription.touched && 
+									validationDescription.valid && 
+									manifestacionType
+								)
+							,
+							'd-none':
+								(registerForm.form.valid && !isFileValid) || registerForm.form.invalid}">
+								<button *ngIf="!isFileChosen || (isFileChosen && isFileValid)" type="button" (click)="register(registerForm)"  class="btn btn-primary" [disabled]="isButton">Enviar</button>
 							</div>
 
 
