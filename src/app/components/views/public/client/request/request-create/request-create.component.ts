@@ -183,7 +183,11 @@ export class RequestCreateComponent implements OnInit {
 				}
 
 				let file: File = currentFile;
-				this.fileName = file.name+"...";
+				if(maxFiles>1){
+					this.fileName = file.name+"...";
+				}else{
+					this.fileName = file.name;
+				}
 
 				let reader = new FileReader();
 
@@ -233,16 +237,17 @@ export class RequestCreateComponent implements OnInit {
 				this.request.originRequest=form.value.originRequest;
 			}
 
+			
+			
 			this._requestService.create(this.request).subscribe(
 				response => {
-					console.log("Registrado Exitosamente");
 					this.isLoading = false;
 					alert("Solicitud Enviada Correctamente");
 					setTimeout(()=>{
 						let pathRoute = window.location.origin;
 						let currentRout = pathRoute+'/request/create/?manifestacionType='+this.manifestacionType
 						window.location.replace(currentRout);
-					},0)
+					},1000)
 				},
 				error => {
 					console.log(error);
@@ -254,7 +259,7 @@ export class RequestCreateComponent implements OnInit {
 		
 	}
 
-	resetAll(form:NgForm){
+	resetAll(){
 		//form.reset();
 		//this.inputOrigin.setValue({inputOrigin:'1'})
 		this.description="";
