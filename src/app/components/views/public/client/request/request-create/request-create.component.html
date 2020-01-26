@@ -139,8 +139,15 @@
 									</div>
 								</div>
 								
-								<div *ngIf="isYes && (!documentTypes || !originRequests)">
-									<h2 class="text-center mb-3">Hay problemas de conexión, compruebe su conexión a internet o recargue la página.</h2>
+								<div class="m-auto" *ngIf="isYes && !failedConect && (!documentTypes || !originRequests)">
+									<div class="spinner-border" role="status">
+										<span class="sr-only">Espere...</span>
+									</div>
+									<div class="mb-5"></div>
+								</div>
+
+								<div class="m-auto" *ngIf="isYes && failedConect && (!documentTypes || !originRequests)">
+									<p class="text-center mb-5">{{failedConect}}</p>
 								</div>
 
 							</div>

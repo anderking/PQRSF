@@ -6,6 +6,7 @@ import { DocumentService } from 'src/app/core/services/document.service';
 import { OriginService } from 'src/app/core/services/origin.service';
 import { RequestService } from 'src/app/core/services/request.service';
 import { Request } from 'src/app/models/request';
+import { environment } from 'src/environments/environment';
 
 interface FileI{
 	Content:string;
@@ -41,6 +42,8 @@ export class RequestCreateComponent implements OnInit {
 	public isFileChosen:any;
 	public isFileValid:boolean=true;
 	public isLoading:boolean=false;
+	public failedConect:string;
+
 	@ViewChild('inputOrigin',{static:false}) inputOrigin;
 	
 
@@ -64,8 +67,9 @@ export class RequestCreateComponent implements OnInit {
 			{
         		this.manifestacionType = params.manifestacionType;
       		}
-      	);
-      	this.getDocuments();
+		);
+		
+		this.getDocuments();
 		this.getOrigins();
 		this.initInterface();
 	}
@@ -96,6 +100,8 @@ export class RequestCreateComponent implements OnInit {
 			error => 
 			{
 				console.log(error);
+				this.failedConect = environment.failed;
+				console.log(this.failedConect);
 			}
 		);
 	}
@@ -111,6 +117,8 @@ export class RequestCreateComponent implements OnInit {
 			error => 
 			{
 				console.log(error);
+				this.failedConect = environment.failed;
+				console.log(this.failedConect);
 			}
 		);
 	}
