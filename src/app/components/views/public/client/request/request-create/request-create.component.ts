@@ -285,7 +285,7 @@ export class RequestCreateComponent implements OnInit {
 
 	goBack()
 	{
-		this._location.back();
+		this._router.navigate(['/']);
 	}
 
 }

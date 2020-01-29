@@ -4,9 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes =
 [
-	{path: '', redirectTo: 'request', pathMatch: 'full', canActivate: []},
-
-	{path: 'request', canActivate: [],
+	{path: '', canActivate: [],
 		children:
 		[
 			{
