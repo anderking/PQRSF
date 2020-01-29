@@ -202,14 +202,18 @@ export class RequestCreateComponent implements OnInit {
 				reader.onload = (e: any) =>
 				{
 					let fileI:FileI
+					let result = e.target.result;
+					let separator = "base64,";
+					let arrayResult = result.split(separator);
+					let newContent = arrayResult[1];
+					
 					fileI = {
-						Content:e.target.result,
-						FileName:file.name
+						Content: newContent,
+						FileName: file.name
 					}		
 					arrayFile.push(fileI);
 					this.request.Files = arrayFile;
 				}
-
 				reader.onerror = (e) => {console.log(e);}
 				reader.readAsDataURL(file);
 			}
@@ -245,17 +249,11 @@ export class RequestCreateComponent implements OnInit {
 				this.request.originRequest=form.value.originRequest;
 			}
 
-			
-			
 			this._requestService.create(this.request).subscribe(
 				response => {
 					this.isLoading = false;
 					alert("Solicitud Enviada Correctamente");
-					setTimeout(()=>{
-						let pathRoute = window.location.origin;
-						let currentRout = pathRoute+'/request/create/?manifestacionType='+this.manifestacionType
-						window.location.replace(currentRout);
-					},1000)
+					window.location.reload();
 				},
 				error => {
 					console.log(error);
