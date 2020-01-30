@@ -66,3 +66,8 @@ a.btn, button.btn{
 		height: auto;
 	}
 }
+@media (max-width: 343px){
+	.btnmt{
+		margin-top: 1em;
+	}
+}

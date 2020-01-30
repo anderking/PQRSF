@@ -266,8 +266,6 @@ export class RequestCreateComponent implements OnInit {
 	}
 
 	resetAll(){
-		//form.reset();
-		//this.inputOrigin.setValue({inputOrigin:'1'})
 		this.description="";
 		this.manifestacionResponse="";
 		this.firstName="";
@@ -280,7 +278,8 @@ export class RequestCreateComponent implements OnInit {
 		this.isYes=false;
 		this.isNo=false;
 		this.isButton=false;
-		//this.registerForm.form.markAsPristine();
+		this.isFileValid=true;
+		this.isLoading=false;
 	}
 
 	goBack()
