@@ -224,47 +224,46 @@ export class RequestCreateComponent implements OnInit {
 	{
 		this.isLoading = true;
 		this.isButton = true;
+		let string = form.value.manifestacionResponse;
+		let stringResponse = string.charAt(0).toUpperCase() + string.slice(1);
 
-			if(form.value.manifestacionResponse=="No")
-			{
-				this.request.description = form.value.description;
-				this.request.manifestacionResponse = form.value.manifestacionResponse;
-				this.request.firstName = "";
-				this.request.lastName = "";
-				this.request.email = "";
-				this.request.documentType = "";
-				this.request.document = "";
-				this.request.originRequest="";
+		if(stringResponse==="No")
+		{
+			this.request.description = form.value.description;
+			this.request.manifestacionResponse = stringResponse;
+			this.request.firstName = "";
+			this.request.lastName = "";
+			this.request.email = "";
+			this.request.documentType = "";
+			this.request.document = "";
+			this.request.originRequest="";
+		}
+
+		if(stringResponse==="Si")
+		{
+			this.request.description = form.value.description;
+			this.request.manifestacionResponse = stringResponse;
+			this.request.firstName = form.value.firstName;
+			this.request.lastName = form.value.lastName;
+			this.request.email = form.value.email;
+			this.request.documentType = form.value.documentType;
+			this.request.document = form.value.document;
+			this.request.originRequest=form.value.originRequest;
+		}
+
+		this._requestService.create(this.request).subscribe(
+			response => {
+				this.isLoading = false;
+				alert("Solicitud Enviada Correctamente");
+				window.location.reload();
+			},
+			error => {
+				console.log(error);
+				alert(error.message)
+				this.isButton=false;
+				this.isLoading = false;
 			}
-
-			if(form.value.manifestacionResponse=="Si")
-			{
-				this.request.description = form.value.description;
-				this.request.manifestacionResponse = form.value.manifestacionResponse;
-				this.request.firstName = form.value.firstName;
-				this.request.lastName = form.value.lastName;
-				this.request.email = form.value.email;
-				this.request.documentType = form.value.documentType;
-				this.request.document = form.value.document;
-				this.request.originRequest=form.value.originRequest;
-			}
-
-			console.log(this.request);
-
-			this._requestService.create(this.request).subscribe(
-				response => {
-					this.isLoading = false;
-					alert("Solicitud Enviada Correctamente");
-					window.location.reload();
-				},
-				error => {
-					console.log(error);
-					alert(error.message)
-					this.isButton=false;
-					this.isLoading = false;
-				}
-			);
-		
+		);
 	}
 
 	resetAll(){
