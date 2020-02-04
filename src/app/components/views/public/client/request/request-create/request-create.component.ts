@@ -125,7 +125,7 @@ export class RequestCreateComponent implements OnInit {
 
 	changeResponse(event)
 	{
-		if(event=="si")
+		if(event=="Si")
 		{
 			this.isYes=true;
 			this.isNo=false;
@@ -225,7 +225,7 @@ export class RequestCreateComponent implements OnInit {
 		this.isLoading = true;
 		this.isButton = true;
 
-			if(form.value.manifestacionResponse=="no")
+			if(form.value.manifestacionResponse=="No")
 			{
 				this.request.description = form.value.description;
 				this.request.manifestacionResponse = form.value.manifestacionResponse;
@@ -237,7 +237,7 @@ export class RequestCreateComponent implements OnInit {
 				this.request.originRequest="";
 			}
 
-			if(form.value.manifestacionResponse=="si")
+			if(form.value.manifestacionResponse=="Si")
 			{
 				this.request.description = form.value.description;
 				this.request.manifestacionResponse = form.value.manifestacionResponse;
@@ -248,6 +248,8 @@ export class RequestCreateComponent implements OnInit {
 				this.request.document = form.value.document;
 				this.request.originRequest=form.value.originRequest;
 			}
+
+			console.log(this.request);
 
 			this._requestService.create(this.request).subscribe(
 				response => {

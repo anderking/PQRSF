@@ -63,11 +63,11 @@
 
 
 									<div class="custom-control custom-radio">
-										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="si" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseSi.touched && !validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty, 'is-valid': validationManifestacionResponseSi.touched && validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty}" required>
+										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="Si" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseSi.touched && !validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty, 'is-valid': validationManifestacionResponseSi.touched && validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty}" required>
 										<label class="custom-control-label" for="customControlValidation2">Si</label>
 									</div>
 									<div class="custom-control custom-radio mb-3">
-										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="no" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseNo.touched && !validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty, 'is-valid': validationManifestacionResponseNo.touched && validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty}" required>
+										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="No" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseNo.touched && !validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty, 'is-valid': validationManifestacionResponseNo.touched && validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty}" required>
 										<label class="custom-control-label" for="customControlValidation3">No</label>
 										<div class="invalid-feedback">Por favor, indique su respuesta</div>
 									</div>
