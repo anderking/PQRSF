@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import {Location} from '@angular/common';
@@ -7,6 +7,7 @@ import { OriginService } from 'src/app/core/services/origin.service';
 import { RequestService } from 'src/app/core/services/request.service';
 import { Request } from 'src/app/models/request';
 import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/core/services/shared.service';
 
 interface FileI{
 	Content:string;
@@ -44,17 +45,14 @@ export class RequestCreateComponent implements OnInit {
 	public isLoading:boolean=false;
 	public failedConect:string;
 
-	@ViewChild('inputOrigin',{static:false}) inputOrigin;
-	
-
 	constructor
 	(
 		private _documentService: DocumentService,
 		private _originService: OriginService,
 		private _requestService: RequestService,
+		private _sharedService: SharedService,
 		private _router: Router,
 		private route: ActivatedRoute,
-		private _location: Location,
 	)
 	{
 	}
@@ -251,10 +249,12 @@ export class RequestCreateComponent implements OnInit {
 			this.request.originRequest=form.value.originRequest;
 		}
 
+		
 		this._requestService.create(this.request).subscribe(
 			response => {
 				this.isLoading = false;
-				alert("Solicitud Enviada Correctamente");
+				//alert("Solicitud Enviada Correctamente");
+				this._sharedService.emitChange(true);
 				window.location.reload();
 			},
 			error => {

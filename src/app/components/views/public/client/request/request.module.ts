@@ -10,6 +10,7 @@ import { RequestComponent } from './request.component';
 import { RequestsComponent } from './requests/requests.component';
 import { RequestCreateComponent } from './request-create/request-create.component';
 import { RequestService } from 'src/app/core/services/request.service';
+import { SharedService } from 'src/app/core/services/shared.service';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RequestService } from 'src/app/core/services/request.service';
   [
     OriginService,
     DocumentService,
-    RequestService
+    RequestService,
+    SharedService
   ]
 })
 

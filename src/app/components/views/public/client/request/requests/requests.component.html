@@ -7,24 +7,31 @@
 					</div>
 				</div>
 				<br>
+
+				<div *ngIf="isSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+					Solicitud creada correctamente!
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 				
 				<div class="row">
 					<div class="col-sm-12 col-md-4">
-						<a [routerLink]="['/create']"  [queryParams]="{ manifestacionType: 'Petición'}">
+						<a [routerLink]="['/create']" [queryParams]="{ manifestacionType: 'Peticion'}" skipLocationChange>
 							<h5 class="text-center">PETICIÓN</h5>
 							<img class="img_request img-fluid" src="assets/img/peticiones.png" alt="...">
 						</a>
 						<p class="text-center">Corresponde a las manifestaciones, cuyo propósito es recibir información sobre situaciones de interés general y/o particular de la institución frente a los servicios que se le ofrece a sus usuarios.</p>
 					</div>
 					<div class="col-sm-12 col-md-4">
-						<a [routerLink]="['/create']"  [queryParams]="{ manifestacionType: 'Reclamo'}">
+						<a [routerLink]="['/create']" [queryParams]="{ manifestacionType: 'Reclamo'}" skipLocationChange>
 							<h5 class="text-center">RECLAMO</h5>
 							<img class="img_request img-fluid" src="assets/img/reclamos.png" alt="...">
 						</a>
 						<p class="text-center">Es manifestación de un usuario referente a la prestación indebida de un servicio o a la a falta de atención de una solicitud.</p>
 					</div>
 					<div class="col-sm-12 col-md-4">
-						<a [routerLink]="['/create']"  [queryParams]="{ manifestacionType: 'Felicitaciones'}">
+						<a [routerLink]="['/create']" [queryParams]="{ manifestacionType: 'Felicitacion'}" skipLocationChange>
 							<h5 class="text-center">FELICITACIÓN</h5>
 							<img class="img_request img-fluid" src="assets/img/felicitaciones.png" alt="...">
 						</a>
@@ -35,14 +42,14 @@
 				
 				<div class="row justify-content-center">
 					<div class="col-sm-12 col-md-4">
-						<a [routerLink]="['/create']"  [queryParams]="{ manifestacionType: 'Queja'}">
+						<a [routerLink]="['/create']" [queryParams]="{ manifestacionType: 'Queja'}" skipLocationChange>
 							<h5 class="text-center">QUEJA</h5>
 							<img class="img_request img-fluid" src="assets/img/quejas.png" alt="...">
 						</a>
 						<p class="text-center">Este tipo de manifestación permite manifestar la  insatisfacción con los servicios o funcionarios  de la Universidad, o al propio proceso de tratamiento de quejas.</p>
 					</div>
 					<div class="col-sm-12 col-md-4">
-						<a [routerLink]="['/create']"  [queryParams]="{ manifestacionType: 'Sugerencia'}">
+						<a [routerLink]="['/create']" [queryParams]="{ manifestacionType: 'Sugerencia'}" skipLocationChange>
 							<h5 class="text-center">SUGERENCIA</h5>
 							<img class="img_request img-fluid" src="assets/img/sugerencias.png" alt="...">
 						</a>
