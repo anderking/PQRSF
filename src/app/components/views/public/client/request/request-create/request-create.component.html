@@ -10,7 +10,7 @@
 				
 				<div class="row">
 					<div class="col-sm-12">
-						<img class="img_request_create img-fluid" src="assets/img/fondo1.jpg" alt="...">
+						<img class="img_request_create img-fluid" src="assets/img/encabezado.png" alt="...">
 						<br>
 					</div>
 				</div>
@@ -168,7 +168,7 @@
 							'd-none':
 								(registerForm.form.valid && !isFileValid) || registerForm.form.invalid}">
 
-								<button *ngIf="(!isLoading && !isFileChosen) || (isFileChosen && isFileValid && !isLoading)" type="button" (click)="register(registerForm)"  class="btn btn-primary" [disabled]="isButton">Enviar</button>
+								<button *ngIf="(!isLoading && !isFileChosen) || (isFileChosen && isFileValid && !isLoading)" type="button" (click)="register(registerForm)"  class="btn btn-primary btnmt" [disabled]="isButton">Enviar</button>
 								<button *ngIf="isLoading" class="btn btn-primary btnmt" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Espere...</button>
 
 							</div>
