@@ -46,6 +46,10 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public filesToUpload: any;
 	public isFileChosen: any;
 	public isFileValid: boolean = true;
+	public fileArrayName:object[];
+	public arrayDelete:any=[];
+	public countFileOpenChange:boolean;
+	public diffFiles:any;
 	public isLoading: boolean = false;
 	public failedConect: string;
 
@@ -134,6 +138,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	}
 
 	uploadPic(event) {
+		
 		let filesInput = event.target.files;
 		let docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 		let doc = 'application/msword';
@@ -151,7 +156,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		allowed_types = [docx, doc, xlsx, xls, pptx, ppt, mdb, jpg, jpeg, png, pdf, txt];
 		const max_size = 5000000; // 5 Mb
 
-		if (filesInput) {
+		if (filesInput.length>0) {
 			this.isFileChosen = true;
 
 			let arrayFile = [];
@@ -163,6 +168,8 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 				this.isFileValid = false;
 				return false;
 			}
+
+			this.fileArrayName = [];
 
 			for (var i = 0; i < filesInput.length; i++) {
 				this.isFileValid = true;
@@ -204,12 +211,42 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 						FileName: file.name
 					}
 					arrayFile.push(fileI);
+					
+					if(this.request.Files!=arrayFile){
+						this.countFileOpenChange=true;
+						this.arrayDelete = [];
+					}
+					this.fileArrayName.push(fileI);
 					this.request.Files = arrayFile;
 				}
 				reader.onerror = (e) => { console.log(e); }
 				reader.readAsDataURL(file);
 			}
 		}
+	}
+
+	deleteFile(file,index){
+		
+		let fileNameToDelete = file.Content;
+		let array = this.request.Files;
+		let arrayAux=[];
+
+		for (let i = 0; i < array.length; i++) {
+			if(i==index){
+				this.arrayDelete.push(index)
+				console.log("Eliminado: ",array[i].FileName);
+				$('#file-'+i).css("display","none")
+				console.log(this.arrayDelete)
+			}
+			
+			for (let k = 0; k < this.arrayDelete.length; k++) {
+				if( (i!=k) && (i!=index) && k==index ){
+					arrayAux.push(array[i])
+				}
+			}
+		}
+		console.log(arrayAux);
+		console.log(this.arrayDelete);
 	}
 
 	register(form: NgForm) {
@@ -271,6 +308,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		this.isButton = false;
 		this.isFileValid = true;
 		this.isLoading = false;
+		this.fileArrayName = null;
 	}
 
 	goBack() {

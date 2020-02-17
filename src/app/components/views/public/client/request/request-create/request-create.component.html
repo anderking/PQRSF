@@ -1,130 +1,166 @@
 	<div class="container-sm">
-			<div class="">
-				<div class="row">
-					<div class="col-sm-12">
-						<h4 class="text-center">CREAR SOLICITUD</h4>
-					</div>
-				</div>
-				  
-				<br><br>
-				
-				<div class="row">
-					<div class="col-sm-12">
-						<img class="img_request_create img-fluid" src="assets/img/encabezado.png" alt="...">
-						<br>
-					</div>
-				</div>
-				
-				<br><br>
+	  <div class="">
+	    <div class="row">
+	      <div class="col-sm-12">
+	        <h4 class="text-center">CREAR SOLICITUD</h4>
+	      </div>
+	    </div>
 
-				<div class="row">
-					<div class="col-sm-12">
-						<form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
-							<div class="form-row">
+	    <br><br>
 
-								<div class="form-group form-check col-sm-12">
-									<h6>1. Tipo de manifestación*</h6>
-									<input type="checkbox"  name="manifestacionType" checked value="{{manifestacionType}}"  required disabled>
-									<label class="form-check-label" for="exampleCheck1">{{ manifestacionType | titlecase }}</label>
-								</div>
+	    <div class="row">
+	      <div class="col-sm-12">
+	        <img class="img_request_create img-fluid" src="assets/img/encabezado.png" alt="...">
+	        <br>
+	      </div>
+	    </div>
 
+	    <br><br>
 
-								<div class="form-group col-sm-12">
-									<h6>2. Descripción de la manifestación*</h6>
-									<small class="form-text text-muted">Con el proposito de gestionar de la forma mas eficiente su manifestación, le recomendamos tener en cuenta en su redacción el nombre de la dependencia o personas involucradas si lo considera pertinente.</small>
-									<textarea type="text" class="form-control" name="description" #validationDescription="ngModel" placeholder="Descripción" [(ngModel)]="description" minlength="1" maxlength="300" required></textarea>
-								</div>
+	    <div class="row">
+	      <div class="col-sm-12">
+	        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+	          <div class="form-row">
 
-								<div class=" form-group col-sm-12 col-md-6">
-									<div class="input-group mb-2">
-										<div class="input-group-prepend">
-											<div class="input-group-text"><i class="fa fa-paperclip"></i></div>
-										</div>
-
-										<div class="custom-file">
-											<input type="file" multiple class="custom-file-input" name="file" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" #validationFile="ngModel" ngModel>
-											<label class="custom-file-label" for="inputGroupFile01">{{ fileName }}</label>
-										</div>
-
-									</div>
-								</div>
-
-								<div class="form-group col-sm-12">
-
-									<h6>3.¿Desea recibir respuesta a su manifestación?*</h6>
-									<small class="form-text text-muted">Los datos suministrados se trataran en confirmidad con la ley 1581 de 2012, "Por la cual se dictan disposiciones generales para la proteccion de datos personales".</small>
-									<div class="overflow-h mb-3">
-										<a href="http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx" target="_blank">http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx</a>
-									</div>
+	            <div class="form-group form-check col-sm-12">
+	              <h6>1. Tipo de manifestación*</h6>
+	              <input type="checkbox" name="manifestacionType" checked value="{{manifestacionType}}" required disabled>
+	              <label class="form-check-label" for="exampleCheck1">{{ manifestacionType | titlecase }}</label>
+	            </div>
 
 
-									<div class="custom-control custom-radio">
-										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="Si" (ngModelChange)="changeResponse($event)"  required>
-										<label class="custom-control-label" for="customControlValidation2">Si</label>
-									</div>
-									<div class="custom-control custom-radio mb-1">
-										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="No" (ngModelChange)="changeResponse($event)"  required>
-										<label class="custom-control-label" for="customControlValidation3">No</label>
-									</div>
+	            <div class="form-group col-sm-12">
+	              <h6>2. Descripción de la manifestación*</h6>
+	              <small class="form-text text-muted">Con el proposito de gestionar de la forma mas eficiente su
+	                manifestación, le recomendamos tener en cuenta en su redacción el nombre de la dependencia o personas
+	                involucradas si lo considera pertinente.</small>
+	              <textarea type="text" class="form-control" name="description" #validationDescription="ngModel"
+	                placeholder="Descripción" [(ngModel)]="description" minlength="1" maxlength="300" required></textarea>
+	            </div>
 
-								</div>
+	            <div class=" form-group col-sm-12 col-md-6">
+	              <div class="input-group mb-2">
+	                <div class="input-group-prepend">
+	                  <div class="input-group-text"><i class="fa fa-paperclip"></i></div>
+	                </div>
 
-								<div *ngIf="documentTypes && originRequests" class="form-group col-sm-12 col-md-6" [ngClass]="{'d-block': isYes, 'd-none': !isYes}">
-									<div class="form-group">
-										<h6>4. Nombre(s)*</h6>
-										<input type="text" class="form-control" name="firstName" #validationFirstName="ngModel" placeholder="Nombre(s)" [(ngModel)]="firstName" minlength="1" maxlength="300" required>
-									</div>
+	                <div class="custom-file">
+	                  <input type="file" multiple class="custom-file-input" name="file" id="inputGroupFile01"
+	                    aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" #validationFile="ngModel"
+	                    ngModel>
+	                  <label class="custom-file-label" for="inputGroupFile01">{{ fileName }}</label>
+	                </div>
 
-									<div class="form-group">
-										<h6>5. Apellido(s)*</h6>
-										<input type="text" class="form-control" name="lastName" #validationLastName="ngModel" placeholder="Apellido(s)" [(ngModel)]="lastName" minlength="1" maxlength="300" required>
-									</div>
+	              </div>
+	            </div>
 
-									<div class="form-group">
-										<h6>6. Email*</h6>
-										<input type="email" class="form-control" name="email" #validationEmail="ngModel" placeholder="Email" [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
-									</div>
+	            <div *ngIf="fileArrayName" class="form-group col-sm-12">
+	              <div class="file-delete">
+	                <div class="row">
+	                  <div class="col-sm-6">
+	                    <div *ngFor="let file of fileArrayName; let i = index" id="file-{{i}}">
+	                      <span class="badge badge-info"> {{file.FileName}} </span>
+	                      <button type="button" class="close" aria-label="Close" (click)="deleteFile(file,i)">
+	                        <span aria-hidden="true" style="color:#dc3545">&times;</span>
+	                      </button>
+	                      <br>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	            </div>
 
-									<div class="form-group">
-										<h6>7. Tipo de documento*</h6>
-										<select name="documentType" #validationDocumentType="ngModel" [(ngModel)]="documentType" class="form-control selectpicker" required>
-											<option value="" disabled selected hidden>Seleccione un tipo de documento</option>
-											<option *ngFor="let documentType of documentTypes" [value]="documentType.Value"> {{documentType.Name}}</option>
-										</select>
+	            <div class="form-group col-sm-12">
 
-									</div>
+	              <h6>3.¿Desea recibir respuesta a su manifestación?*</h6>
+	              <small class="form-text text-muted">Los datos suministrados se trataran en confirmidad con la ley 1581 de
+	                2012, "Por la cual se dictan disposiciones generales para la proteccion de datos personales".</small>
+	              <div class="overflow-h mb-3">
+	                <a href="http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx"
+	                  target="_blank">http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx</a>
+	              </div>
 
-									<div class="form-group">
-										<h6>8. Número de documento*</h6>
-										<input type="text" class="form-control" name="document" #validationDocument="ngModel" placeholder="Número de documento" [(ngModel)]="document" required maxlength="300">
-									</div>
 
-									<div class="form-group">
-										<h6>9. Origen de la solicitud*</h6>
-										<select #inputOrigin name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest"  class="form-control selectpicker" >
-											<!--<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>-->
-											<option *ngFor="let originRequest of originRequests" [ngValue]="originRequest.Value"> {{originRequest.Name}}</option>
-										</select>
-									</div>
-								</div>
-								
-								<div class="m-auto" *ngIf="isYes && !failedConect && (!documentTypes || !originRequests)">
-									<div class="spinner-border" role="status">
-										<span class="sr-only">Espere...</span>
-									</div>
-									<div class="mb-5"></div>
-								</div>
+	              <div class="custom-control custom-radio">
+	                <input type="radio" id="customControlValidation2" class="custom-control-input"
+	                  name="manifestacionResponse" #validationManifestacionResponseSi="ngModel"
+	                  [(ngModel)]="manifestacionResponse" value="Si" (ngModelChange)="changeResponse($event)" required>
+	                <label class="custom-control-label" for="customControlValidation2">Si</label>
+	              </div>
+	              <div class="custom-control custom-radio mb-1">
+	                <input type="radio" id="customControlValidation3" class="custom-control-input"
+	                  name="manifestacionResponse" #validationManifestacionResponseNo="ngModel"
+	                  [(ngModel)]="manifestacionResponse" value="No" (ngModelChange)="changeResponse($event)" required>
+	                <label class="custom-control-label" for="customControlValidation3">No</label>
+	              </div>
 
-								<div class="m-auto" *ngIf="isYes && failedConect && (!documentTypes || !originRequests)">
-									<p class="text-center mb-5">{{failedConect}}</p>
-								</div>
+	            </div>
 
-							</div>
+	            <div *ngIf="documentTypes && originRequests" class="form-group col-sm-12 col-md-6"
+	              [ngClass]="{'d-block': isYes, 'd-none': !isYes}">
+	              <div class="form-group">
+	                <h6>4. Nombre(s)*</h6>
+	                <input type="text" class="form-control" name="firstName" #validationFirstName="ngModel"
+	                  placeholder="Nombre(s)" [(ngModel)]="firstName" minlength="1" maxlength="300" required>
+	              </div>
 
-							<button  type="button" class="btn btn-secondary" (click)="goBack()" [disabled]="isLoading">Regresar</button>
-							<button type="reset" (click)="resetAll()" class="btn btn-info" [disabled]="isLoading">Cancelar</button>
+	              <div class="form-group">
+	                <h6>5. Apellido(s)*</h6>
+	                <input type="text" class="form-control" name="lastName" #validationLastName="ngModel"
+	                  placeholder="Apellido(s)" [(ngModel)]="lastName" minlength="1" maxlength="300" required>
+	              </div>
 
-							<div [ngClass]="{
+	              <div class="form-group">
+	                <h6>6. Email*</h6>
+	                <input type="email" class="form-control" name="email" #validationEmail="ngModel" placeholder="Email"
+	                  [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
+	              </div>
+
+	              <div class="form-group">
+	                <h6>7. Tipo de documento*</h6>
+	                <select name="documentType" #validationDocumentType="ngModel" [(ngModel)]="documentType"
+	                  class="form-control selectpicker" required>
+	                  <option value="" disabled selected hidden>Seleccione un tipo de documento</option>
+	                  <option *ngFor="let documentType of documentTypes" [value]="documentType.Value">
+	                    {{documentType.Name}}</option>
+	                </select>
+
+	              </div>
+
+	              <div class="form-group">
+	                <h6>8. Número de documento*</h6>
+	                <input type="text" class="form-control" name="document" #validationDocument="ngModel"
+	                  placeholder="Número de documento" [(ngModel)]="document" required maxlength="300">
+	              </div>
+
+	              <div class="form-group">
+	                <h6>9. Origen de la solicitud*</h6>
+	                <select #inputOrigin name="originRequest" #validationOriginRequest="ngModel"
+	                  [(ngModel)]="originRequest" class="form-control selectpicker">
+	                  <!--<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>-->
+	                  <option *ngFor="let originRequest of originRequests" [ngValue]="originRequest.Value">
+	                    {{originRequest.Name}}</option>
+	                </select>
+	              </div>
+	            </div>
+
+	            <div class="m-auto" *ngIf="isYes && !failedConect && (!documentTypes || !originRequests)">
+	              <div class="spinner-border" role="status">
+	                <span class="sr-only">Espere...</span>
+	              </div>
+	              <div class="mb-5"></div>
+	            </div>
+
+	            <div class="m-auto" *ngIf="isYes && failedConect && (!documentTypes || !originRequests)">
+	              <p class="text-center mb-5">{{failedConect}}</p>
+	            </div>
+
+	          </div>
+
+	          <button type="button" class="btn btn-secondary" (click)="goBack()" [disabled]="isLoading">Regresar</button>
+	          <button type="reset" (click)="resetAll()" class="btn btn-info" [disabled]="isLoading">Cancelar</button>
+
+	          <div [ngClass]="{
 							'd-inline-block':
 								(registerForm.form.valid && manifestacionType!=undefined) ||
 								(
@@ -137,14 +173,16 @@
 							'd-none':
 								(registerForm.form.valid && !isFileValid) || registerForm.form.invalid}">
 
-								<button *ngIf="(!isLoading && !isFileChosen) || (isFileChosen && isFileValid && !isLoading)" type="button" (click)="register(registerForm)"  class="btn btn-primary btnmt" [disabled]="isButton">Enviar</button>
-								<button *ngIf="isLoading" class="btn btn-primary btnmt" type="button" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Espere...</button>
+	            <button *ngIf="(!isLoading && !isFileChosen) || (isFileChosen && isFileValid && !isLoading)" type="button"
+	              (click)="register(registerForm)" class="btn btn-primary btnmt" [disabled]="isButton">Enviar</button>
+	            <button *ngIf="isLoading" class="btn btn-primary btnmt" type="button" disabled><span
+	                class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Espere...</button>
 
-							</div>
+	          </div>
 
-						</form>
-					</div>
-				</div>
-			</div>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
 
 	</div>
