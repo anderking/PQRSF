@@ -5,7 +5,7 @@
 						<h4 class="text-center">CREAR SOLICITUD</h4>
 					</div>
 				</div>
-				
+				  
 				<br><br>
 				
 				<div class="row">
@@ -32,11 +32,7 @@
 								<div class="form-group col-sm-12">
 									<h6>2. Descripción de la manifestación*</h6>
 									<small class="form-text text-muted">Con el proposito de gestionar de la forma mas eficiente su manifestación, le recomendamos tener en cuenta en su redacción el nombre de la dependencia o personas involucradas si lo considera pertinente.</small>
-									<textarea type="text" [ngClass]="{'is-invalid': validationDescription.touched && !validationDescription.valid, 'is-valid': validationDescription.touched && validationDescription.valid}" class="form-control" name="description" #validationDescription="ngModel" placeholder="Descripción" [(ngModel)]="description" minlength="1" maxlength="300" required></textarea>
-
-									<div class="invalid-feedback" *ngIf="validationDescription.touched && !validationDescription.valid">
-										<div *ngIf="validationDescription.errors.required">Por favor, introduzca un Descripción</div>
-									</div>
+									<textarea type="text" class="form-control" name="description" #validationDescription="ngModel" placeholder="Descripción" [(ngModel)]="description" minlength="1" maxlength="300" required></textarea>
 								</div>
 
 								<div class=" form-group col-sm-12 col-md-6">
@@ -46,7 +42,7 @@
 										</div>
 
 										<div class="custom-file">
-											<input type="file" multiple class="custom-file-input" name="file" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" #validationFile="ngModel" ngModel [ngClass]="{'is-invalid': validationFile.touched && !isFileValid && validationFile.dirty, 'is-valid': validationFile.touched && isFileValid && validationFile.dirty}">
+											<input type="file" multiple class="custom-file-input" name="file" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" #validationFile="ngModel" ngModel>
 											<label class="custom-file-label" for="inputGroupFile01">{{ fileName }}</label>
 										</div>
 
@@ -57,19 +53,18 @@
 
 									<h6>3.¿Desea recibir respuesta a su manifestación?*</h6>
 									<small class="form-text text-muted">Los datos suministrados se trataran en confirmidad con la ley 1581 de 2012, "Por la cual se dictan disposiciones generales para la proteccion de datos personales".</small>
-									<div class="overflow-h">
+									<div class="overflow-h mb-3">
 										<a href="http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx" target="_blank">http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx</a>
 									</div>
 
 
 									<div class="custom-control custom-radio">
-										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="Si" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseSi.touched && !validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty, 'is-valid': validationManifestacionResponseSi.touched && validationManifestacionResponseSi.valid && validationManifestacionResponseSi.dirty}" required>
+										<input type="radio" id="customControlValidation2" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseSi="ngModel" [(ngModel)]="manifestacionResponse" value="Si" (ngModelChange)="changeResponse($event)"  required>
 										<label class="custom-control-label" for="customControlValidation2">Si</label>
 									</div>
-									<div class="custom-control custom-radio mb-3">
-										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="No" (ngModelChange)="changeResponse($event)" [ngClass]="{'is-invalid': validationManifestacionResponseNo.touched && !validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty, 'is-valid': validationManifestacionResponseNo.touched && validationManifestacionResponseNo.valid && validationManifestacionResponseNo.dirty}" required>
+									<div class="custom-control custom-radio mb-1">
+										<input type="radio" id="customControlValidation3" class="custom-control-input" name="manifestacionResponse" #validationManifestacionResponseNo="ngModel" [(ngModel)]="manifestacionResponse" value="No" (ngModelChange)="changeResponse($event)"  required>
 										<label class="custom-control-label" for="customControlValidation3">No</label>
-										<div class="invalid-feedback">Por favor, indique su respuesta</div>
 									</div>
 
 								</div>
@@ -77,65 +72,39 @@
 								<div *ngIf="documentTypes && originRequests" class="form-group col-sm-12 col-md-6" [ngClass]="{'d-block': isYes, 'd-none': !isYes}">
 									<div class="form-group">
 										<h6>4. Nombre(s)*</h6>
-										<input type="text" [ngClass]="{'is-invalid': validationFirstName.touched && !validationFirstName.valid, 'is-valid': validationFirstName.touched && validationFirstName.valid}" class="form-control" name="firstName" #validationFirstName="ngModel" placeholder="Nombre(s)" [(ngModel)]="firstName" minlength="1" maxlength="300" required>
-										<div class="invalid-feedback" *ngIf="validationFirstName.touched && !validationFirstName.valid">
-											<div *ngIf="validationFirstName.errors.required">Por favor, introduzca un Nombre</div>
-										</div>
+										<input type="text" class="form-control" name="firstName" #validationFirstName="ngModel" placeholder="Nombre(s)" [(ngModel)]="firstName" minlength="1" maxlength="300" required>
 									</div>
 
 									<div class="form-group">
 										<h6>5. Apellido(s)*</h6>
-										<input type="text" [ngClass]="{'is-invalid': validationLastName.touched && !validationLastName.valid, 'is-valid': validationLastName.touched && validationLastName.valid}" class="form-control" name="lastName" #validationLastName="ngModel" placeholder="Apellido(s)" [(ngModel)]="lastName" minlength="1" maxlength="300" required>
-										<div class="invalid-feedback" *ngIf="validationLastName.touched && !validationLastName.valid">
-											<div *ngIf="validationLastName.errors.required">Por favor, introduzca un Apellido</div>
-										</div>
+										<input type="text" class="form-control" name="lastName" #validationLastName="ngModel" placeholder="Apellido(s)" [(ngModel)]="lastName" minlength="1" maxlength="300" required>
 									</div>
 
 									<div class="form-group">
 										<h6>6. Email*</h6>
-										<input type="email" [ngClass]="{'is-invalid': validationEmail.touched && !validationEmail.valid, 'is-valid': validationEmail.touched && validationEmail.valid}" class="form-control" name="email" #validationEmail="ngModel" placeholder="Email" [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
-
-
-										<div class="invalid-feedback" *ngIf="validationEmail.touched && !validationEmail.valid">
-											<div *ngIf="validationEmail.errors.required">Por favor, introduzca un Email</div>
-											<div *ngIf="validationEmail.errors.pattern">El Email no es correcto, Ejemplo: name@company.com</div>
-										</div>
+										<input type="email" class="form-control" name="email" #validationEmail="ngModel" placeholder="Email" [(ngModel)]="email" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
 									</div>
 
 									<div class="form-group">
 										<h6>7. Tipo de documento*</h6>
-										<select [ngClass]="{'is-invalid': validationDocumentType.touched && !validationDocumentType.valid, 'is-valid': validationDocumentType.touched && validationDocumentType.valid}" name="documentType" #validationDocumentType="ngModel" [(ngModel)]="documentType" class="form-control" required>
+										<select name="documentType" #validationDocumentType="ngModel" [(ngModel)]="documentType" class="form-control selectpicker" required>
 											<option value="" disabled selected hidden>Seleccione un tipo de documento</option>
 											<option *ngFor="let documentType of documentTypes" [value]="documentType.Value"> {{documentType.Name}}</option>
 										</select>
-
-										<div class="invalid-feedback" *ngIf="validationDocumentType.touched && !validationDocumentType.valid">
-											<div *ngIf="validationDocumentType.errors.required">Por favor, introduzca un tipo de documento</div>
-										</div>
 
 									</div>
 
 									<div class="form-group">
 										<h6>8. Número de documento*</h6>
-										<input type="text" [ngClass]="{'is-invalid': validationDocument.touched && !validationDocument.valid, 'is-valid': validationDocument.touched && validationDocument.valid}" class="form-control" name="document" #validationDocument="ngModel" placeholder="Número de documento" [(ngModel)]="document" required maxlength="300">
-
-										<div class="invalid-feedback" *ngIf="validationDocument.touched && !validationDocument.valid">
-											<div *ngIf="validationDocument.errors.required">Por favor, introduzca un número de documento</div>
-											<div *ngIf="validationDocument.errors.maxlength">El número de documento debe contener maximo 300 caracteres</div>
-
-										</div>
+										<input type="text" class="form-control" name="document" #validationDocument="ngModel" placeholder="Número de documento" [(ngModel)]="document" required maxlength="300">
 									</div>
 
 									<div class="form-group">
 										<h6>9. Origen de la solicitud*</h6>
-										<select #inputOrigin [ngClass]="{'is-invalid': validationOriginRequest.touched && !validationOriginRequest.valid, 'is-valid':  validationOriginRequest.touched && validationOriginRequest.valid}" name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest"  class="form-control" >
+										<select #inputOrigin name="originRequest" #validationOriginRequest="ngModel" [(ngModel)]="originRequest"  class="form-control selectpicker" >
 											<!--<option value="" disabled selected hidden>Seleccione un origen de solicitud</option>-->
 											<option *ngFor="let originRequest of originRequests" [ngValue]="originRequest.Value"> {{originRequest.Name}}</option>
 										</select>
-
-										<div class="invalid-feedback" *ngIf="validationOriginRequest.touched && !validationOriginRequest.valid">
-											<div *ngIf="validationOriginRequest.errors.required">Por favor, introduzca un origen de la solicitud</div>
-										</div>
 									</div>
 								</div>
 								

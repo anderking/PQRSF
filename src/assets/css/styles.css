@@ -7,7 +7,7 @@ body,html{
 }
 
 .main {
-    padding: 1em;
+    padding: 1rem 1rem 4rem 1rem;
     min-height: 100vh;
 }
 
