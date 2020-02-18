@@ -1,4 +1,4 @@
 export class Origin{
-  	origin: string;
-  	description:string;
+  	Value: string;
+  	Name:string;
 }
