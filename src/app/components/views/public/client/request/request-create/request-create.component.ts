@@ -47,9 +47,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public isFileChosen: any;
 	public isFileValid: boolean = true;
 	public fileArrayName:object[];
-	public arrayDelete:any=[];
-	public countFileOpenChange:boolean;
-	public diffFiles:any;
+	public fileArrayDelete:object[];
 	public isLoading: boolean = false;
 	public failedConect: string;
 
@@ -138,7 +136,6 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	}
 
 	uploadPic(event) {
-		
 		let filesInput = event.target.files;
 		let docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 		let doc = 'application/msword';
@@ -211,42 +208,39 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 						FileName: file.name
 					}
 					arrayFile.push(fileI);
-					
-					if(this.request.Files!=arrayFile){
-						this.countFileOpenChange=true;
-						this.arrayDelete = [];
-					}
 					this.fileArrayName.push(fileI);
 					this.request.Files = arrayFile;
 				}
 				reader.onerror = (e) => { console.log(e); }
 				reader.readAsDataURL(file);
 			}
+
+			for (let k = 0; k < this.fileArrayName.length; k++) {
+				$('#file-'+k).css("display","block")
+				console.log("#file-"+k)
+			}
 		}
 	}
 
 	deleteFile(file,index){
-		
 		let fileNameToDelete = file.Content;
 		let array = this.request.Files;
-		let arrayAux=[];
-
+		console.log(array);
 		for (let i = 0; i < array.length; i++) {
 			if(i==index){
-				this.arrayDelete.push(index)
+				//console.log(array);
 				console.log("Eliminado: ",array[i].FileName);
 				$('#file-'+i).css("display","none")
-				console.log(this.arrayDelete)
-			}
-			
-			for (let k = 0; k < this.arrayDelete.length; k++) {
-				if( (i!=k) && (i!=index) && k==index ){
-					arrayAux.push(array[i])
-				}
-			}
+				//array.splice(i, 1);
+				delete array[index];
+			}	
 		}
-		console.log(arrayAux);
-		console.log(this.arrayDelete);
+		console.log(array);
+		this.fileArrayDelete = [];
+		array.forEach(element => {
+			this.fileArrayDelete.push(element);
+		});
+		console.log(this.fileArrayDelete);
 	}
 
 	register(form: NgForm) {
