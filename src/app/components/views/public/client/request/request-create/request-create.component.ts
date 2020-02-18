@@ -168,6 +168,13 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 
 			this.fileArrayName = [];
 
+			
+
+			this.request.Files.forEach(element => {
+				arrayFile.push(element);
+				this.fileArrayName.push(element);
+			});
+
 			for (var i = 0; i < filesInput.length; i++) {
 				this.isFileValid = true;
 
@@ -210,15 +217,12 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 					arrayFile.push(fileI);
 					this.fileArrayName.push(fileI);
 					this.request.Files = arrayFile;
+					console.log(this.request.Files)
 				}
 				reader.onerror = (e) => { console.log(e); }
 				reader.readAsDataURL(file);
 			}
 
-			for (let k = 0; k < this.fileArrayName.length; k++) {
-				$('#file-'+k).css("display","block")
-				console.log("#file-"+k)
-			}
 		}
 	}
 
