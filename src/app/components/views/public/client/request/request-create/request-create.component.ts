@@ -48,6 +48,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public isFileValid: boolean = true;
 	public fileArrayName:object[];
 	public fileArrayDelete:object[];
+	public isFileArrayDelete: boolean = false;
 	public isLoading: boolean = false;
 	public failedConect: string;
 
@@ -106,7 +107,6 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 				error => {
 					console.log(error);
 					this.failedConect = environment.failed;
-					console.log(this.failedConect);
 				}
 			);
 	}
@@ -120,7 +120,6 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 				error => {
 					console.log(error);
 					this.failedConect = environment.failed;
-					console.log(this.failedConect);
 				}
 			);
 	}
@@ -133,6 +132,10 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			this.isNo = true;
 			this.isYes = false;
 		}
+	}
+
+	resetInputFile(event) {
+		event.target.value = ''
 	}
 
 	uploadPic(event) {
@@ -151,7 +154,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		let txt = 'text/plain'
 		let allowed_types = [];
 		allowed_types = [docx, doc, xlsx, xls, pptx, ppt, mdb, jpg, jpeg, png, pdf, txt];
-		const max_size = 5000000; // 5 Mb
+		const max_size = 1000000; // 5 Mb
 
 		if (filesInput.length>0) {
 			this.isFileChosen = true;
@@ -159,16 +162,26 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			let arrayFile = [];
 
 			let maxFiles = filesInput.length;
+			let maxFilesAcum;
+			
+			if(this.fileArrayDelete){
+				maxFilesAcum = this.fileArrayDelete.length+maxFiles;
+			}else{
+				maxFilesAcum = this.request.Files.length;
+			}
 
-			if (maxFiles > 5) {
+			if (maxFiles > 5 || maxFilesAcum > 5) {
 				this.fileName = 'La cantidad maxima de archivos permitidos es de 5';
-				this.isFileValid = false;
-				return false;
+				if ( (maxFilesAcum-maxFiles) > 6) {
+					this.isFileValid = false;
+					return false;
+				}else{
+					this.isFileValid = true;
+					return false
+				}
 			}
 
 			this.fileArrayName = [];
-
-			
 
 			this.request.Files.forEach(element => {
 				arrayFile.push(element);
@@ -184,21 +197,31 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 
 				if (!extension) {
 					this.fileName = 'Solo se permiten archivos de tipo IMG, DOCS, PDF, TXT';
-					this.isFileValid = false;
-					return false;
+					if (maxFilesAcum > 6) {
+						this.isFileValid = false;
+						return false;
+					}else{
+						this.isFileValid = true;
+						return false
+					}
 				}
 
 				if (currentFile.size > max_size) {
 					this.fileName = 'Tamaño maximo permitido ' + max_size / 1000000 + 'Mb';
-					this.isFileValid = false;
-					return false;
+					if (maxFilesAcum > 6) {
+						this.isFileValid = false;
+						return false;
+					}else{
+						this.isFileValid = true;
+						return false
+					}
 				}
 
 				let file: File = currentFile;
 				if (maxFiles > 1) {
-					this.fileName = file.name + "...";
+					this.fileName = "Subir archivo"
 				} else {
-					this.fileName = file.name;
+					this.fileName = "Subir archivo"
 				}
 
 				let reader = new FileReader();
@@ -217,7 +240,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 					arrayFile.push(fileI);
 					this.fileArrayName.push(fileI);
 					this.request.Files = arrayFile;
-					console.log(this.request.Files)
+					this.fileArrayDelete = arrayFile;
 				}
 				reader.onerror = (e) => { console.log(e); }
 				reader.readAsDataURL(file);
@@ -226,32 +249,38 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		}
 	}
 
-	deleteFile(file,index){
-		let fileNameToDelete = file.Content;
+	deleteFile(file:object,index:number){
+		this.isFileArrayDelete = true;
+		this.fileArrayDelete = [];
 		let array = this.request.Files;
-		console.log(array);
 		for (let i = 0; i < array.length; i++) {
 			if(i==index){
-				//console.log(array);
-				console.log("Eliminado: ",array[i].FileName);
 				$('#file-'+i).css("display","none")
-				//array.splice(i, 1);
 				delete array[index];
 			}	
 		}
-		console.log(array);
-		this.fileArrayDelete = [];
 		array.forEach(element => {
 			this.fileArrayDelete.push(element);
 		});
-		console.log(this.fileArrayDelete);
+		if(this.fileArrayDelete.length<=5){
+			this.isFileValid = true;
+			this.fileName = "Subir archivo"
+		}else{
+			this.isFileValid = false;
+		}
 	}
 
+	
+
 	register(form: NgForm) {
-		this.isLoading = true;
-		this.isButton = true;
+		//this.isLoading = true;
+		//this.isButton = true;
 		let string = form.value.manifestacionResponse;
 		let stringResponse = string.charAt(0).toUpperCase() + string.slice(1);
+		if(this.isFileArrayDelete){
+			this.request.Files = this.fileArrayDelete;
+		}else{
+		}
 
 		if (stringResponse === "No") {
 			this.request.description = form.value.description;
@@ -275,7 +304,9 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			this.request.originRequest = form.value.originRequest;
 		}
 
-		this._requestService.create(this.request).subscribe(
+		console.log(this.request)
+
+		/*this._requestService.create(this.request).subscribe(
 			response => {
 				this.isLoading = false;
 				//alert("Solicitud Enviada Correctamente");
@@ -288,7 +319,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 				this.isButton = false;
 				this.isLoading = false;
 			}
-		);
+		);*/
 	}
 
 	resetAll() {
@@ -307,6 +338,9 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		this.isFileValid = true;
 		this.isLoading = false;
 		this.fileArrayName = null;
+		this.fileArrayDelete = [];
+		this.isFileArrayDelete = false;
+		this.request.Files = [];
 	}
 
 	goBack() {
