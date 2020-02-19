@@ -24,6 +24,7 @@ interface FileI {
 })
 export class RequestCreateComponent implements OnInit, AfterContentChecked {
 
+	//Variables que manejan los inputs del formulario
 	public manifestacionType: string;
 	public description: string = "";
 	public manifestacionResponse: string = "";
@@ -35,6 +36,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public originRequest: string = "1";
 	public fileName: string = "Subir archivo";
 
+	//Variables que manejan los objetos de los modelos respectivos
 	public request: Request;
 	public originRequests: Origin;
 	public documentTypes: Document;
@@ -61,7 +63,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	) {
 	}
 
-	/*Ciclo de angular*/
+	/***********  INICIO region del ciclo de vida angular  ***********/
 	ngOnInit(): void {
 		this.route.queryParams.subscribe
 			(
@@ -81,50 +83,10 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		$(".selectpicker~.btn").css("border", "1px solid #ced4da");
 		$(".selectpicker~.btn").css("border-radius", "0px");
 	}
-	/*End Ciclo de angular*/
+	/***********  FIN region del ciclo de vida angular  ***********/
 
-	//Inicializo una request
-	initInterface(): void {
-		this.request = {
-			manifestacionType: this.manifestacionType,
-			description: this.description,
-			Files: [],
-			manifestacionResponse: this.manifestacionResponse,
-			firstName: this.firstName,
-			lastName: this.lastName,
-			email: this.email,
-			documentType: this.documentType,
-			document: this.document,
-			originRequest: this.originRequest
-		}
-	}
 
-	//Obtiene todos los documentos de la lista de configuracion de la api
-	getDocuments(): void {
-		this._documentService.All().subscribe
-			(
-				response => {
-					this.documentTypes = response;
-				},
-				error => {
-					console.log(error);
-					this.failedConect = environment.failed;
-				}
-			);
-	}
-	//Obtiene todos los origines de la lista de configuracion de la api
-	getOrigins(): void {
-		this._originService.All().subscribe
-			(
-				response => {
-					this.originRequests = response;
-				},
-				error => {
-					console.log(error);
-					this.failedConect = environment.failed;
-				}
-			);
-	}
+	/***********  INICIO region funciones para el manejo de carga de files  ***********/
 
 	//Evento que se dispara cuando cambias de respuesta Si o No y así cambiar el estado de los booleanos respectivos
 	changeResponse(event): void {
@@ -286,6 +248,38 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		}
 	}
 
+	/***********  FIN region funciones para el manejo de carga de files  ***********/
+
+	
+	/***********  INICIO region CRUD  ***********/
+
+	//Obtiene todos los documentos de la lista de configuracion de la api
+	getDocuments(): void {
+		this._documentService.All().subscribe
+			(
+				response => {
+					this.documentTypes = response;
+				},
+				error => {
+					console.log(error);
+					this.failedConect = environment.failed;
+				}
+			);
+	}
+	//Obtiene todos los origines de la lista de configuracion de la api
+	getOrigins(): void {
+		this._originService.All().subscribe
+			(
+				response => {
+					this.originRequests = response;
+				},
+				error => {
+					console.log(error);
+					this.failedConect = environment.failed;
+				}
+			);
+	}
+
 	//Envia la peticion para reigstrar una request
 	register(form: NgForm) {
 		this.isLoading = true;
@@ -325,15 +319,35 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		this._requestService.create(this.request).subscribe(
 			response => {
 				this.isLoading = false;
-				window.location.reload();
+				window.location.replace("http://www.eafit.edu.co/Paginas/PortalAccesoPQRSFQA.aspx");
 			},
 			error => {
 				console.log(error);
-				alert(error.message)
+				alert("Ha ocurrido un error de conexión, por favor recargue la página e intente de nuevo")
 				this.isButton = false;
 				this.isLoading = false;
 			}
 		);
+	}
+
+	/***********  FIN region CRUD  ***********/
+
+	/***********  INICIO region funciones utiles  ***********/
+
+	//Inicializo una request
+	initInterface(): void {
+		this.request = {
+			manifestacionType: this.manifestacionType,
+			description: this.description,
+			Files: [],
+			manifestacionResponse: this.manifestacionResponse,
+			firstName: this.firstName,
+			lastName: this.lastName,
+			email: this.email,
+			documentType: this.documentType,
+			document: this.document,
+			originRequest: this.originRequest
+		}
 	}
 
 	//Reseteamos los valores a sus estados originales
@@ -367,5 +381,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	reLoad() {
 		window.location.reload();
 	}
+
+	/***********  FIN region funciones utiles  ***********/
 
 }

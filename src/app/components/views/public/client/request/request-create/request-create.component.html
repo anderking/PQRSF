@@ -158,7 +158,7 @@
 	          </div>
 
 	          <button type="button" class="btn btn-secondary" (click)="goBack()" [disabled]="isLoading">Regresar</button>
-	          <button type="reset" (click)="resetAll()" class="btn btn-info" [disabled]="isLoading">Cancelar</button>
+	          <button type="reset" (click)="reLoad()" class="btn btn-info" [disabled]="isLoading">Cancelar</button>
 
 	          <div [ngClass]="{
 							'd-inline-block':
