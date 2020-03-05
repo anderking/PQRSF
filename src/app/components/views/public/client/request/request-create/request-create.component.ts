@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Document } from 'src/app/models/document';
@@ -8,7 +8,6 @@ import { OriginService } from 'src/app/core/services/origin.service';
 import { Request } from 'src/app/models/request';
 import { RequestService } from 'src/app/core/services/request.service';
 import { environment } from 'src/environments/environment';
-import { Location } from '@angular/common';
 
 declare var $: any
 
@@ -59,13 +58,14 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			private _originService: OriginService,
 			private _requestService: RequestService,
 			private _router: Router,
-			private route: ActivatedRoute,
+			private _route: ActivatedRoute,
 	) {
 	}
 
-	/***********  INICIO region del ciclo de vida angular  ***********/
+	//#region Ciclo de vida angular
+
 	ngOnInit(): void {
-		this.route.queryParams.subscribe
+		this._route.queryParams.subscribe
 			(
 				params => {
 					this.manifestacionType = params.manifestacionType;
@@ -83,10 +83,10 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		$(".selectpicker~.btn").css("border", "1px solid #ced4da");
 		$(".selectpicker~.btn").css("border-radius", "0px");
 	}
-	/***********  FIN region del ciclo de vida angular  ***********/
 
+	//#endregion Ciclo de vida angular
 
-	/***********  INICIO region funciones para el manejo de carga de files  ***********/
+	//#region funciones para el manejo de carga de files
 
 	//Evento que se dispara cuando cambias de respuesta Si o No y así cambiar el estado de los booleanos respectivos
 	changeResponse(event): void {
@@ -224,7 +224,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	}
 
 	//Elimina los files y almacena el array de files restantes
-	deleteFile(file: object, index: number):void {
+	deleteFile(file: object, index: number): void {
 		this.isFileArrayDelete = true;
 		this.fileArrayDelete = [];//Reiniciamos en vacio el array de files borrados
 		let array = this.request.Files; //Almacenamos los files actuales en un array auxiliar
@@ -238,7 +238,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		array.forEach(element => {
 			this.fileArrayDelete.push(element);
 		});
-		
+
 		//Necesario para las validaciones
 		if (this.fileArrayDelete.length <= 5) {
 			this.isFileValid = true;
@@ -248,10 +248,9 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		}
 	}
 
-	/***********  FIN region funciones para el manejo de carga de files  ***********/
+	//#endregion funciones para el manejo de carga de files
 
-	
-	/***********  INICIO region CRUD  ***********/
+	//#region CRUD
 
 	//Obtiene todos los documentos de la lista de configuracion de la api
 	getDocuments(): void {
@@ -286,7 +285,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		this.isButton = true;
 		let string = form.value.manifestacionResponse;
 		let stringResponse = string.charAt(0).toUpperCase() + string.slice(1);
-		
+
 		//Si se han borrado files durante el proceso de carga, actualizamos el request.Files para evitar los empty
 		if (this.isFileArrayDelete) {
 			this.request.Files = this.fileArrayDelete;
@@ -314,12 +313,13 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			this.request.document = form.value.document;
 			this.request.originRequest = form.value.originRequest;
 		}
-		
+
 		//Llamamos al servicio para generar la peticion
 		this._requestService.create(this.request).subscribe(
 			response => {
 				this.isLoading = false;
-				window.location.replace("http://www.eafit.edu.co/Paginas/PortalAccesoPQRSFQA.aspx");
+				let url = "http://www.eafit.edu.co/Paginas/PortalAccesoPQRSFQA.aspx";
+				window.parent.location.href = url;
 			},
 			error => {
 				console.log(error);
@@ -330,9 +330,9 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		);
 	}
 
-	/***********  FIN region CRUD  ***********/
+	//#endregion CRUD
 
-	/***********  INICIO region funciones utiles  ***********/
+	//#region funciones utiles
 
 	//Inicializo una request
 	initInterface(): void {
@@ -376,12 +376,12 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	goBack() {
 		this._router.navigate(['/']);
 	}
-	
+
 	//Recargar la pagina
 	reLoad() {
 		window.location.reload();
 	}
 
-	/***********  FIN region funciones utiles  ***********/
+	//#endregion funciones utiles
 
 }

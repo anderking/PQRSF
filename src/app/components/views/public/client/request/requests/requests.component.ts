@@ -12,4 +12,9 @@ export class RequestsComponent implements OnInit {
   ngOnInit() {
   }
 
+  goBack(){
+    let url = "http://www.eafit.edu.co/Paginas/PortalAccesoPQRSFQA.aspx";
+		window.parent.location.href = url;
+  }
+
 }
