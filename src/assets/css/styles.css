@@ -3,14 +3,15 @@
 body,html{
 	background: #ffffff;
 	font-size: 14px;
-	color: #000000;
+	color: #ffffff;
 }
-/* body{
+body{
 	background-image: url(../img/fondo.jpg) !important;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-} */
+	background-size: cover;
+	background-attachment: fixed;
+}
 
 .main {
     padding: 1rem 1rem 1rem 1rem;
@@ -28,7 +29,7 @@ footer p{
 	margin: 0;
 }
 a{
-	color: #000000;
+	color: #ffffff;
 }
 a,a:hover{
 	text-decoration: none;
@@ -36,11 +37,18 @@ a,a:hover{
 a.btn, button.btn{
 	margin-right: 1em;
 }
-
+.text-muted{
+	color: #ffffff !important;
+}
 .img_request{
 	height: 145px;
 	width: 100%;
 	padding: 0 3rem;
+	transition: all .15s cubic-bezier(.33,.66,.66,1);
+    transition-property: all;
+    transition-duration: .15s;
+    transition-timing-function: cubic-bezier(.33,.66,.66,1);
+    transition-delay: initial;
 }
 .img_rol{
 	width: 50px;
@@ -90,8 +98,14 @@ a.btn, button.btn{
 }
 
 a:hover {
-    color: #0BA3D7;
+    color: #000000;
 }
-.main-request p{
+/* .main-request p{
 	font-size: 12px;
+} */
+
+.img_request:hover{
+	
+	transform: translate3d(0,-3px,0);
+	border-radius: 10px;
 }
