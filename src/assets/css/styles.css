@@ -5,10 +5,17 @@ body,html{
 	font-size: 14px;
 	color: #000000;
 }
+/* body{
+	background-image: url(../img/fondo.jpg) !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
 
 .main {
-    padding: 1rem 1rem 4rem 1rem;
-    min-height: 100vh;
+    padding: 1rem 1rem 1rem 1rem;
+	min-height: 100vh;
+	/* height: 100vh; */
 }
 
 footer{
@@ -31,7 +38,7 @@ a.btn, button.btn{
 }
 
 .img_request{
-	height: 150px;
+	height: 145px;
 	width: 100%;
 	padding: 0 3rem;
 }
@@ -56,9 +63,9 @@ a.btn, button.btn{
 }
 
 @media (max-width: 575.98px) {
-	.img_request{
+	/* .img_request{
 		padding: 0;
-	}
+	} */
 }
 
 @media (max-width: 992px) { 
@@ -70,4 +77,21 @@ a.btn, button.btn{
 	.btnmt{
 		margin-top: 1em;
 	}
+}
+
+.btn-info {
+    background-color: #0BA3D7;
+    border-color: #0BA3D7;
+}
+
+.btn-primary {
+    background-color: #283E8A;
+    border-color: #283E8A;
+}
+
+a:hover {
+    color: #0BA3D7;
+}
+.main-request p{
+	font-size: 12px;
 }
