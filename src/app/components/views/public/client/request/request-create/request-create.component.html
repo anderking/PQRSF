@@ -46,8 +46,8 @@
 
 	                <div class="custom-file">
 	                  <input type="file" multiple class="custom-file-input" name="file" id="inputGroupFile01"
-	                    aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)" (click)="resetInputFile($event)" #validationFile="ngModel"
-	                    ngModel>
+	                    aria-describedby="inputGroupFileAddon01" (change)="uploadPic($event)"
+	                    (click)="resetInputFile($event)" #validationFile="ngModel" ngModel>
 	                  <label class="custom-file-label" for="inputGroupFile01">{{ fileName }}</label>
 	                </div>
 
@@ -73,8 +73,8 @@
 	            <div class="form-group col-sm-12">
 
 	              <h6>3.¿Desea recibir respuesta a su manifestación?*</h6>
-	              <small class="form-text text-muted">Los datos suministrados se trataran en confirmidad con la ley 1581 de
-	                2012, "Por la cual se dictan disposiciones generales para la proteccion de datos personales".</small>
+	              <small class="form-text text-muted">Los datos suministrados se trataran en conformidad con la ley 1581 de
+	                2012, "Por la cual se dictan disposiciones generales para la protección de datos personales".</small>
 	              <div class="overflow-h mb-3">
 	                <a href="http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx"
 	                  target="_blank">http://www.eafit.edu.co/institucional/reglamentos/tratamiento-proteccion-datos-personales/Paginas/politica-tratamiento-datos-personales.aspx</a>
@@ -158,7 +158,7 @@
 	          </div>
 
 	          <button type="button" class="btn btn-info" (click)="goBack()" [disabled]="isLoading">Regresar</button>
-	          <button type="reset" (click)="reLoad()" class="btn btn-dark" [disabled]="isLoading">Cancelar</button>
+	          <button type="button" (click)="reLoad()" class="btn btn-dark" [disabled]="isLoading">Cancelar</button>
 
 	          <div [ngClass]="{
 							'd-inline-block':
@@ -173,7 +173,7 @@
 							'd-none':
 								(registerForm.form.valid && !isFileValid) || registerForm.form.invalid}">
 
-	            <button *ngIf="(!isLoading && !isFileChosen) || (isFileChosen && isFileValid && !isLoading)" type="button"
+	            <button *ngIf=" (!isLoading && !isFileChosen && !isFailedConectBool) || (!isLoading && isFileChosen && isFileValid && !isFailedConectBool )" type="button"
 	              (click)="register(registerForm)" class="btn btn-primary btnmt" [disabled]="isButton">Enviar</button>
 	            <button *ngIf="isLoading" class="btn btn-primary btnmt" type="button" disabled><span
 	                class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Espere...</button>

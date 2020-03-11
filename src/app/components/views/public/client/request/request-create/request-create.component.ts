@@ -26,6 +26,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	//Variables que manejan los inputs del formulario
 	public manifestacionType: string;
 	public description: string = "";
+	public fileName: string = "Subir archivo";
 	public manifestacionResponse: string = "";
 	public firstName: string = "";
 	public lastName: string = "";
@@ -33,7 +34,6 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public documentType: string = "";
 	public document: string = "";
 	public originRequest: string = "1";
-	public fileName: string = "Subir archivo";
 
 	//Variables que manejan los objetos de los modelos respectivos
 	public request: Request;
@@ -44,8 +44,9 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public isNo: boolean = false;//Indica si selecionaste la opcion no en el formulario
 	public isButton: boolean = false;//Indica si el formulario es valido o no para habilitar el button de enviar
 
-	public isFileChosen: boolean;//Indica si hay un file cargado
+	public isFileChosen: boolean = false;//Indica si hay un file cargado
 	public isFileValid: boolean = true;//Indica si el proceso de cargar files es valido
+	public isFailedConectBool: boolean = false; //Indica si hay problemas de conexion no se puede enviar nada
 	public fileArrayName: object[];//Arreglo para almacenar los nombres de los files cargados en el html
 	public fileArrayDelete: object[];//Arreglo para almacenar los files restantes luego de borrar alguno
 	public isFileArrayDelete: boolean = false;//Indica si se borro algun file por el usuario
@@ -82,6 +83,15 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		$(".selectpicker~.btn").removeClass('btn-light');
 		$(".selectpicker~.btn").css("border", "1px solid #ced4da");
 		$(".selectpicker~.btn").css("border-radius", "0px");
+		//Si al seleccionar la opcion de Si y sale el mensaje de falla de conexion o
+		//Si al selecionar la opcion de Si y no sale el mensaje de falla de conexion y tampoco se han cargado los tipos de documentos
+		if ((this.isYes && this.failedConect != undefined) || (this.isYes && !this.failedConect && (!this.documentTypes || !this.originRequests))) {
+			this.isFailedConectBool = true;
+		}
+		//Si se cargaron exitosamente los tipos de documentos y los origines entonces hay que volver a habilitar
+		if (this.documentTypes && this.originRequests) {
+			this.isFailedConectBool = false;
+		}
 	}
 
 	//#endregion Ciclo de vida angular
@@ -93,9 +103,15 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		if (event == "Si") {
 			this.isYes = true;
 			this.isNo = false;
+			if (this.isFailedConectBool) {
+				this.isFailedConectBool = false;
+			}
 		} else {
 			this.isNo = true;
 			this.isYes = false;
+			if (this.isFailedConectBool) {
+				this.isFailedConectBool = false;
+			}
 		}
 	}
 
@@ -142,6 +158,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			//Validacion para subir no mas de 5 files
 			if (maxFiles > 5 || maxFilesAcum > 5) {
 				this.fileName = 'La cantidad maxima de archivos permitidos es de 5';
+				this.isFileValid = false;
 				if ((maxFilesAcum - maxFiles) > 6) {
 					this.isFileValid = false;
 					return false;
@@ -168,7 +185,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 
 				//Validamos si la extension actual se encuentra en la indicada por el array de extensiones validas
 				if (!extension) {
-					this.fileName = 'Solo se permiten archivos de tipo IMG, DOCS, PDF, TXT';
+					this.fileName = 'Solo se permiten archivos de tipo IMG, DOCS, PDF o TXT';
 					if (maxFilesAcum > 6) {
 						this.isFileValid = false;
 						return false;
@@ -319,13 +336,14 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			response => {
 				this.isLoading = false;
 				let url = "http://www.eafit.edu.co/Paginas/PortalAccesoPQRSFQA.aspx";
-				window.parent.location.href = url;
+				window.top.location.href = url; //Esto hace que redireccione fuera del iframe
 			},
 			error => {
 				console.log(error);
-				alert("Ha ocurrido un error de conexión, por favor recargue la página e intente de nuevo")
-				this.isButton = false;
-				this.isLoading = false;
+				alert(environment.conexionFailed)
+				this.reLoad()
+				/* this.isButton = false;
+				this.isLoading = false; */
 			}
 		);
 	}
@@ -353,6 +371,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	//Reseteamos los valores a sus estados originales
 	resetAll() {
 		this.description = "";
+		this.fileName = "Subir archivo"
 		this.manifestacionResponse = "";
 		this.firstName = "";
 		this.lastName = "";
@@ -360,12 +379,12 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 		this.documentType = "";
 		this.document = "";
 		this.originRequest = "1:1";
-		this.fileName = "Subir archivo"
 		this.isYes = false;
 		this.isNo = false;
 		this.isButton = false;
 		this.isFileValid = true;
 		this.isLoading = false;
+		this.isFailedConectBool = false;
 		this.fileArrayName = null;
 		this.fileArrayDelete = [];
 		this.isFileArrayDelete = false;
