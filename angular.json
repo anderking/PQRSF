@@ -24,13 +24,16 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/bootstrap/dist/css/bootstrap.css",
-              "./src/assets/css/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
+              "./src/assets/css/styles.css"
             ],
             "scripts": [
-              "./node_modules/jquery/dist/jquery.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.js",
-              "src/assets/js/main.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/js/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
+              "src/assets/js/main.js"
             ]
           },
           "configurations": {

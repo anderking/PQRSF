@@ -1,4 +1,4 @@
 export class Document{
-  	type: string;
-  	description:string;
+  	Value: string;
+  	Name:string;
 }

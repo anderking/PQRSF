@@ -7,9 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RequestsComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+  }
+
+  goBack(){
+    let url = "http://www.eafit.edu.co/Paginas/PortalAccesoPQRSFQA.aspx";
+		window.parent.location.href = url;
   }
 
 }

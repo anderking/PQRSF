@@ -4,9 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes =
 [
-	{path: '', redirectTo: 'request', pathMatch: 'full', canActivate: []},
-
-	{path: 'request', canActivate: [],
+	{path: '', canActivate: [],
 		children:
 		[
 			{
@@ -19,4 +17,4 @@ const routes: Routes =
 ];
 
 export const appRoutingProviders: any[] = [];
-export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled' });
+export const routing: ModuleWithProviders = RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled',  useHash: true });

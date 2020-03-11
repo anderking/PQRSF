@@ -9,7 +9,7 @@ import { Document } from 'src/app/models/document';
 @Injectable()
 export class DocumentService extends HeaderService{
 
-	url: string = environment.api + 'users';
+	url: string = environment.api + 'GetDocumentosType';
 
 	constructor(
 		private http: HttpClient

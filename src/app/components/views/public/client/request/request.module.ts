@@ -4,11 +4,11 @@ import { OriginService } from 'src/app/core/services/origin.service';
 import { DocumentService } from 'src/app/core/services/document.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 import { RequestRoutingModule } from './request-routing.module';
 import { RequestComponent } from './request.component';
 import { RequestsComponent } from './requests/requests.component';
 import { RequestCreateComponent } from './request-create/request-create.component';
+import { RequestService } from 'src/app/core/services/request.service';
 
 
 @NgModule({
@@ -27,6 +27,7 @@ import { RequestCreateComponent } from './request-create/request-create.componen
   [
     OriginService,
     DocumentService,
+    RequestService,
   ]
 })
 
