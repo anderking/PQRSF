@@ -52,6 +52,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	public isFileArrayDelete: boolean = false;//Indica si se borro algun file por el usuario
 	public isLoading: boolean = false;//Indica si hay un proceso de carga que requiere esperar
 	public failedConect: string;//String que almacena el message de falla de conexion con la api
+	public conexionFailed: string //String que almacena el mensaje de falla de conexion al intentar enviar datos a la api
 
 	constructor
 		(
@@ -66,6 +67,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	//#region Ciclo de vida angular
 
 	ngOnInit(): void {
+		this.conexionFailed = environment.conexionFailed;
 		this._route.queryParams.subscribe
 			(
 				params => {
@@ -99,7 +101,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 	//#region funciones para el manejo de carga de files
 
 	//Evento que se dispara cuando cambias de respuesta Si o No y así cambiar el estado de los booleanos respectivos
-	changeResponse(event): void {
+	changeResponse(event:any): void {
 		if (event == "Si") {
 			this.isYes = true;
 			this.isNo = false;
@@ -172,7 +174,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 
 			/*Leemos los files guardados hasta el momento y los agregamos a los array de
 			Archivos cargados temporalmente y el de los nombres que se muestran en el html */
-			this.request.Files.forEach(element => {
+			this.request.Files.forEach((element:any) => {
 				arrayFile.push(element);
 				this.fileArrayName.push(element);
 			});
@@ -252,7 +254,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			}
 		}
 		//Vamos agregando los files restantes
-		array.forEach(element => {
+		array.forEach((element:any) => {
 			this.fileArrayDelete.push(element);
 		});
 
@@ -340,7 +342,7 @@ export class RequestCreateComponent implements OnInit, AfterContentChecked {
 			},
 			error => {
 				console.log(error);
-				alert(environment.conexionFailed)
+				alert(this.conexionFailed)
 				this.reLoad()
 				/* this.isButton = false;
 				this.isLoading = false; */
